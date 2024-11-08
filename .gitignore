@@ -1,0 +1,6 @@
+# Ignore large files and directories
+.venv/
+models/fine_tuned_gpt_neo_poverty_lens/
+*.dll
+*.lib
+*.safetensors
