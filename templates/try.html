@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Pindai Wilayah - PovertyLens</title>
+        <link
+            rel="icon"
+            type="image/x-icon"
+            href="/static/images/onlylogo-colorful.svg"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="/static/css/style.css" />
+        <link
+            href="{{url_for('static',filename='css/output.css')}}"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        />
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+        <script src="https://unpkg.com/leaflet-image@0.4.1/leaflet-image.js"></script>
+        <style>
+            #mapid {
+                position: absolute;
+
+                left: 0;
+                width: 50%;
+                height: 300px;
+                z-index: 1;
+            }
+        </style>
+    </head>
+    <body>
+        {% include 'partials/navbar.html' %}
+        <!-- Home -->
+        <section class="p-6 bg-white top-0 px-20">
+            <h2>Pilih Koordinat Lokasi</h2>
+            <label for="coordInput"
+                >Masukkan Koordinat (latitude, longitude):</label
+            >
+            <input type="text" id="coordInput" value="-6.858944, 109.147861" />
+            <button id="getCoord">Ambil dari Peta</button>
+            <button id="submit">Kirim Koordinat</button>
+
+            <div id="mapid" class="absolute"></div>
+        </section>
+
+        <script>
+            var map = L.map("mapid").setView([-6.858944, 109.147861], 13)
+
+            // Add tile layer (you can switch this to a satellite layer if desired)
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                attribution:
+                    'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                maxZoom: 18,
+            }).addTo(map)
+
+            // Add marker at the location
+            var marker = L.marker([-6.858944, 109.147861])
+                .addTo(map)
+                .bindPopup(
+                    "<b>Koordinat Lokasi!</b><br>6°51'32.2\"S 109°08'52.3\"E",
+                )
+                .openPopup()
+
+            // Fungsi untuk mengambil koordinat dari peta
+            map.on("click", function (e) {
+                var lat = e.latlng.lat
+                var lng = e.latlng.lng
+
+                // Perbarui input dengan koordinat yang diambil
+                document.getElementById("coordInput").value = lat + ", " + lng
+
+                // Pindahkan marker ke lokasi yang diklik
+                marker.setLatLng([lat, lng])
+            })
+
+            // Fungsi untuk mengambil koordinat dari inputan
+            document.getElementById("getCoord").onclick = function () {
+                var coords = document
+                    .getElementById("coordInput")
+                    .value.split(",")
+                var lat = parseFloat(coords[0])
+                var lng = parseFloat(coords[1])
+
+                // Pindahkan peta ke koordinat yang dimasukkan
+                map.setView([lat, lng], 13)
+                marker.setLatLng([lat, lng])
+            }
+
+            // Fungsi untuk mengirimkan koordinat
+            document.getElementById("submit").onclick = function () {
+                var coords = document.getElementById("coordInput").value
+                alert("Koordinat yang dikirim: " + coords)
+                // Di sini Anda dapat menambahkan logika untuk mengirimkan koordinat ke server atau melakukan aksi lainnya
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Pindai Wilayah - PovertyLens</title>
+        <link
+            rel="icon"
+            type="image/x-icon"
+            href="/static/images/onlylogo-colorful.svg"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;600&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="/static/css/style.css" />
+        <link
+            href="{{ url_for('static', filename='css/output.css') }}"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        />
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+        <script src="https://unpkg.com/leaflet-image@0.4.1/leaflet-image.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+        <style>
+            #mapid {
+                width: 100%; /* Mengatur lebar peta 100% dari div induknya */
+                height: 300px; /* Mengatur tinggi peta */
+                border-radius: 8px; /* Menambahkan radius untuk sudut yang lebih halus */
+                margin-bottom: 20px; /* Menambahkan margin di bawah peta */
+            }
+            body {
+                height: 4000px;
+            }
+        </style>
+    </head>
+    <body>
+        {% include 'partials/navbar.html' %}
+        <!-- Home -->
+        <section class="p-6 bg-white top-0 px-20">
+            <div class="flex gap-8 pt-5">
+                <!-- Kolom kiri untuk form -->
+                <div class="p-6 rounded-lg w-2/5 border border-black">
+                    <div id="mapid" class=""></div>
+                    <button
+                        id="captureButton"
+                        class="bg-black text-white px-4 py-2 rounded mt-4"
+                    >
+                        Capture Map
+                    </button>
+
+                    <!-- Menampilkan peta di dalam div -->
+                    <div class="mb-4 relative">
+                        <label
+                            for="koordinat"
+                            class="block text-sm font-medium text-gray-700"
+                        >
+                            Koordinat
+                        </label>
+                        <div class="flex items-center">
+                            <input
+                                type="text"
+                                id="koordinat"
+                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 pr-10"
+                                placeholder="Koordinat"
+                                onclick="this.select();"
+                            />
+                            <button
+                                onclick="toggleMapDropdown()"
+                                class="absolute right-2 bg-blue-500 text-white px-3 py-1 rounded-md mt-1"
+                            >
+                                ambil dari maps
+                            </button>
+                        </div>
+
+                        <!-- Dropdown Map -->
+                        <div
+                            id="mapDropdown"
+                            class="hidden absolute z-10 w-full bg-white border border-gray-300 rounded-md mt-1"
+                        >
+                            <div
+                                id="mapid"
+                                style="width: 100%; height: 300px"
+                            ></div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label
+                            for="populasi"
+                            class="block text-sm font-medium text-gray-700"
+                            >Input Populasi Penduduk</label
+                        >
+                        <input
+                            type="text"
+                            id="populasi"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                            placeholder="Input populasi penduduk"
+                        />
+                    </div>
+                    <div class="mb-4">
+                        <label
+                            for="deskripsi"
+                            class="block text-sm font-medium text-gray-700"
+                            >Deskripsi Area</label
+                        >
+                        <textarea
+                            id="deskripsi"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                            rows="3"
+                            placeholder="Deskripsikan area..."
+                        ></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label
+                            for="bantuan"
+                            class="block text-sm font-medium text-gray-700"
+                            >Bantuan yang Dibutuhkan</label
+                        >
+                        <input
+                            type="text"
+                            id="bantuan"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                            placeholder="Bantuan yang dibutuhkan"
+                        />
+                    </div>
+                    <div class="mb-4">
+                        <label
+                            for="tahun"
+                            class="block text-sm font-medium text-gray-700"
+                            >Tahun / Tanggal Pengambilan Gambar</label
+                        >
+                        <input
+                            type="date"
+                            id="tahun"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                        />
+                    </div>
+                    <div class="mb-4">
+                        <label
+                            for="kondisi"
+                            class="block text-sm font-medium text-gray-700"
+                            >Kondisi Lingkungan</label
+                        >
+                        <textarea
+                            id="kondisi"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                            rows="3"
+                            placeholder="Kondisi lingkungan..."
+                        ></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label
+                            for="laporan"
+                            class="block text-sm font-medium text-gray-700"
+                            >Tuliskan Laporan Anda di sini...</label
+                        >
+                        <textarea
+                            id="laporan"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                            rows="3"
+                            placeholder="Tuliskan laporan Anda..."
+                        ></textarea>
+                    </div>
+                    <button class="bg-black text-white px-4 py-2 rounded mt-4">
+                        Submit
+                    </button>
+                </div>
+
+                <!-- Kolom kanan untuk bagian Answering -->
+                <div
+                    class="rounded-lg border-gray-300 w-3/5 p-6 border border-black"
+                >
+                    <h2 class="text-xl font-bold mb-4 text-center">
+                        Answering
+                    </h2>
+                </div>
+            </div>
+        </section>
+        <script>
+            var map = L.map("mapid", {
+                zoomControl: false, // Nonaktifkan kontrol zoom
+                scrollWheelZoom: false, // Nonaktifkan zoom dengan scroll mouse
+                dragging: true, // Masih bisa melakukan drag peta
+            }).setView([-6.858944, 109.147861], 16)
+
+            // Add tile layer
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                attribution:
+                    'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                maxZoom: 18,
+            }).addTo(map)
+
+            // Fungsi untuk mengambil koordinat dari peta
+            map.on("click", function (e) {
+                var lat = e.latlng.lat
+                var lng = e.latlng.lng
+
+                // Perbarui input dengan koordinat yang diambil
+                document.getElementById("koordinat").value = lat + ", " + lng
+            })
+
+            document.getElementById("captureButton").onclick = function () {
+                html2canvas(document.getElementById("mapid"), {
+                    useCORS: true, // Menyediakan dukungan CORS untuk gambar jika ada
+                }).then(function (canvas) {
+                    // Mengonversi canvas menjadi gambar
+                    var imgData = canvas.toDataURL("image/png")
+
+                    // Membuat elemen link untuk mengunduh gambar
+                    var link = document.createElement("a")
+                    link.href = imgData
+                    link.download = "map_capture.png"
+                    document.body.appendChild(link)
+                    link.click()
+                    document.body.removeChild(link) // Menghapus link setelah klik
+                })
+            }
+            function toggleMapDropdown() {
+                var dropdown = document.getElementById("mapDropdown")
+                dropdown.classList.toggle("hidden")
+            }
+
+            // Fungsi untuk menangani klik di peta
+            map.on("click", function (e) {
+                var lat = e.latlng.lat
+                var lng = e.latlng.lng
+
+                // Perbarui input dengan koordinat yang diambil
+                document.getElementById("koordinat").value = lat + ", " + lng
+
+                // Menyembunyikan dropdown setelah memilih koordinat
+                document.getElementById("mapDropdown").classList.add("hidden")
+            })
+        </script>
+    </body>
+</html>

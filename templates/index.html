@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="css/style.css" />
+        <link
+            href="{{url_for('static',filename='css/output.css')}}"
+            rel="stylesheet"
+        />
+        <title>PovertyLens - Map Of Poor Areas</title>
+        <link
+            rel="icon"
+            type="image/x-icon"
+            href="/static/images/onlylogo-colorful.svg"
+        />
+        <style>
+            .bubble-icon {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background-color: transparent; /* Latar belakang transparan */
+                cursor: pointer; /* Kursor pointer saat hover */
+                z-index: 1000; /* Pastikan di atas elemen lain */
+            }
+
+            .bubble-icon img {
+                width: 50px; /* Ukuran icon */
+                height: 50px; /* Ukuran icon */
+            }
+
+            .chat-room {
+                position: fixed; /* Memposisikan chat room */
+                bottom: 80px; /* Jarak dari bawah */
+                right: 20px; /* Jarak dari kanan */
+                width: 300px; /* Lebar chat room */
+                background-color: white; /* Latar belakang putih */
+                border: 1px solid #ddd; /* Garis batas */
+                border-radius: 8px; /* Sudut melengkung */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Bayangan */
+                display: flex;
+                flex-direction: column; /* Mengatur arah flex */
+                z-index: 1000; /* Menempatkan chat room di atas elemen lain */
+            }
+
+            .chat-header {
+                background-color: #f1f1f1; /* Warna latar belakang header */
+                padding: 10px; /* Ruang dalam header */
+                display: flex; /* Flexbox untuk header */
+                justify-content: space-between; /* Rata kanan dan kiri */
+                align-items: center; /* Vertikal rata tengah */
+                border-top-left-radius: 8px; /* Sudut melengkung kiri atas */
+                border-top-right-radius: 8px; /* Sudut melengkung kanan atas */
+            }
+
+            .chat-body {
+                padding: 10px; /* Ruang dalam body */
+                height: 200px; /* Tinggi body */
+                overflow-y: auto; /* Scroll jika isi melebihi tinggi */
+            }
+
+            .chat-footer {
+                display: flex; /* Flexbox untuk footer */
+                padding: 10px; /* Ruang dalam footer */
+            }
+
+            .chat-footer input {
+                flex: 1; /* Membuat input mengambil ruang yang tersisa */
+                padding: 5px; /* Ruang dalam input */
+                border: 1px solid #ddd; /* Garis batas */
+                border-radius: 4px; /* Sudut melengkung */
+            }
+
+            .chat-footer button {
+                margin-left: 5px; /* Jarak antara input dan button */
+                padding: 6px 10px; /* Ruang dalam button */
+                background-color: #007bff; /* Warna latar belakang button */
+                color: white; /* Warna teks */
+                border: none; /* Menghapus garis batas */
+                border-radius: 4px; /* Sudut melengkung */
+                cursor: pointer; /* Kursor pointer saat hover */
+            }
+
+            .hidden-chat {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- navbar -->
+        {% include 'partials/navbar.html' %}
+
+        <!-- home -->
+        <section
+            class="w-full h-full justify-center text-center flex bg-gradient-to-b from-gray-400 to-white absolute top-0"
+        >
+            <!-- Konten Utama -->
+            <div
+                class="relative w-[40rem] font-poppins group py-[13rem] flex flex-col items-center"
+            >
+                <h1 class="text-black font-bold text-5xl">
+                    Map Of Poor Areas with
+                </h1>
+                <h1 class="text-red-600 font-bold text-6xl">PovertyLens</h1>
+                <p class="text-black text-base font-semibold text-center pt-5">
+                    Pemetaan Kemiskinan Berbasis Teknologi untuk Menganalisis
+                    dan Mengatasi Tantangan Ekonomi, Mewujudkan Kehidupan yang
+                    Lebih Baik bagi Semua.
+                </p>
+
+                <div class="pt-4">
+                    <a
+                        href="{{ url_for('pindaiWilayah') }}"
+                        class="flex items-center space-x-2 bg-black hover:bg-red-600 px-8 py-3 rounded-full"
+                    >
+                        <h1 class="text-white text-sm font-semibold">
+                            Pindai Wilayah
+                        </h1>
+                        <img
+                            src="/static/images/iconpindai.svg"
+                            class="h-5 w-5"
+                        />
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- pengertian -->
+        <section
+            class="w-full h-[40rem] py-[15rem] justify-center text-left px-40 bg-gradient-to-b from-gray-200 to-white font-poppins"
+        >
+            <img src="/static/images/logofixblack.svg" alt="" class="pb-5" />
+            <h1 class="text-black">
+                Sebuah inisiatif pemetaan kemiskinan berbasis teknologi yang
+                dirancang untuk menganalisis, memetakan, dan mengatasi berbagai
+                tantangan ekonomi yang dihadapi oleh masyarakat kurang mampu.
+                Dengan memanfaatkan data terkini, alat analitik yang canggih,
+                serta teknologi pemetaan visual, Poverty Lens memberikan
+                gambaran yang jelas dan mendalam mengenai kondisi kemiskinan di
+                berbagai wilayah. Melalui pendekatan ini, program ini bertujuan
+                untuk memberikan wawasan yang lebih baik kepada para pembuat
+                kebijakan, organisasi non-pemerintah, serta pemangku kepentingan
+                lainnya, dalam upaya merancang strategi intervensi yang lebih
+                efektif dan tepat sasaran. Tujuan akhirnya adalah mewujudkan
+                kehidupan yang lebih sejahtera dan berkeadilan bagi seluruh
+                lapisan masyarakat, tanpa terkecuali.
+            </h1>
+        </section>
+
+        <!-- fitur -->
+        <section
+            class="w-full h-[40rem] py-[8rem] justify-center text-center px-40 bg-gradient-to-b from-gray-200 to-white font-poppins"
+        >
+            <h1 class="text-black font-bold text-2xl">
+                Bagaimana sih Fitur AI
+            </h1>
+            <h1 class="text-red-400 font-bold text-2xl">PovertyLens</h1>
+
+            <h1 class="text-black pt-4">
+                Fitur utama dari Poverty Lens adalah kemampuan untuk mengunggah
+                gambar tangkapan layar (screenshot) peta atau maps yang disertai
+                dengan teks pertanyaan dari pengguna. Fitur ini memanfaatkan
+                teknologi kecerdasan buatan (AI) untuk menganalisis peta atau
+                gambar yang diunggah dan menjawab pertanyaan yang diajukan.
+                Pengguna dapat mengirimkan peta yang menunjukkan wilayah
+                tertentu atau area spesifik yang mereka ingin pelajari lebih
+                lanjut, baik itu terkait tingkat kemiskinan, kondisi
+                infrastruktur, akses terhadap layanan publik, atau tantangan
+                ekonomi lainnya.
+
+                <br />
+                <br />
+
+                Setelah gambar dan pertanyaan diterima, AI dalam sistem Poverty
+                Lens akan mengolah data tersebut, memeriksa tren, pola, dan data
+                relevan lainnya untuk memberikan jawaban yang informatif dan
+                tepat sasaran. Dengan adanya fitur ini, Poverty Lens
+                memungkinkan pengguna untuk memperoleh pemahaman yang lebih
+                mendalam mengenai dinamika kemiskinan dan isu-isu terkait di
+                wilayah yang ditentukan, sehingga dapat membantu pengambilan
+                keputusan berbasis data untuk intervensi sosial dan kebijakan
+                yang lebih efektif.
+            </h1>
+        </section>
+
+        <!-- cara pakai -->
+        <section
+            class="w-full h-[40rem] py-[5rem] justify-center text-center px-40 bg-gradient-to-b from-gray-200 to-white font-poppins"
+        >
+            <h1 class="text-black font-bold text-2xl">
+                Terus cara pakai Fitur AI
+            </h1>
+            <h1 class="text-red-400 font-bold text-2xl">PovertyLens gimana?</h1>
+
+            <div class="flex flex-col items-center mt-5 text-sm">
+                <h1
+                    class="bg-red-200 m-3 px-5 rounded-full py-4 text-black pt-4"
+                >
+                    Siapkan screenshot peta atau maps yang ingin kamu tanyakan,
+                    beserta pertanyaannya.Misalnya, mau tahu tentang
+                    <br />kondisi ekonomi suatu wilayah? Siapkan deh!
+                </h1>
+                <h1
+                    class="bg-red-200 m-3 px-5 rounded-full py-4 text-black pt-4"
+                >
+                    Upload file screenshot dan ketik pertanyaanmu di kolom yang
+                    tersedia.
+                </h1>
+                <h1
+                    class="bg-red-200 m-3 px-5 rounded-full py-4 text-black pt-4"
+                >
+                    Setelah itu, AI kita yang super canggih bakal menganalisis
+                    pertanyaan kamu dan hasilnya langsung muncul dalam sekejap!
+                    🎯
+                </h1>
+                <h1
+                    class="bg-red-200 m-3 px-5 rounded-full py-4 text-black pt-4"
+                >
+                    Gampang kan? Kamu tinggal duduk manis sambil nunggu
+                    jawabannya keluar.
+                </h1>
+                <h1
+                    class="bg-red-200 m-3 px-5 rounded-full py-4 text-black pt-4 w-[28rem]"
+                >
+                    Selamat Mencoba dari Mimin Ganteng 😎
+                </h1>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        {% include 'partials/footer.html' %}
+
+        <!-- Bubble Icon -->
+        <div id="bubble-icon" class="bubble-icon">
+            <img src="/static/images/cs.png" alt="Chat" />
+        </div>
+
+        <!-- Chat Room -->
+        <div id="chat-room" class="chat-room hidden-chat">
+            <div class="chat-header">
+                <h3>Chat dengan Kami</h3>
+                <button id="close-chat" class="close-btn">X</button>
+            </div>
+            <div class="chat-body" id="chat-body">
+                <p>Selamat datang di PovertyLens! Ada yang bisa kami bantu?</p>
+            </div>
+            <div class="chat-footer">
+                <input
+                    type="text"
+                    id="chat-input"
+                    placeholder="Ketik pesan..."
+                />
+                <button onclick="sendMessage()">Kirim</button>
+            </div>
+        </div>
+
+        <script>
+            const bubbleIcon = document.getElementById("bubble-icon")
+            const chatRoom = document.getElementById("chat-room")
+            const closeChat = document.getElementById("close-chat")
+
+            // Menampilkan chat room saat bubble icon diklik
+            bubbleIcon.onclick = function () {
+                chatRoom.classList.toggle("hidden-chat")
+            }
+
+            function sendMessage() {
+                const chatBody = document.getElementById("chat-body")
+                const userInput = document.getElementById("chat-input").value
+                if (userInput) {
+                    // Tampilkan pesan pengguna
+                    const userMessage = document.createElement("p")
+                    userMessage.textContent = `Anda: ${userInput}`
+                    chatBody.appendChild(userMessage)
+
+                    // AJAX untuk mengirim pesan ke server
+                    fetch("/send_message", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ message: userInput }),
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            // Tampilkan respons dari chatbot
+                            const botMessage = document.createElement("p")
+                            botMessage.textContent = `PovertyLens: ${data.response}`
+                            chatBody.appendChild(botMessage)
+
+                            // Scroll ke bagian bawah chat
+                            chatBody.scrollTop = chatBody.scrollHeight
+                        })
+
+                    // Kosongkan input setelah mengirim
+                    document.getElementById("chat-input").value = ""
+                }
+            }
+
+            // Menyembunyikan chat room saat tombol close diklik
+            closeChat.onclick = function () {
+                chatRoom.classList.add("hidden") // Menyembunyikan chat room
+            }
+        </script>
+    </body>
+</html>

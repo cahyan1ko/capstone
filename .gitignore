@@ -1,6 +1,10 @@
-# Ignore large files and directories
+# Ignore virtual environments
 .venv/
-models/fine_tuned_gpt_neo_poverty_lens/
+
+# Ignore large library files
 *.dll
 *.lib
 *.safetensors
+
+# Ignore specific model directory
+models/fine_tuned_gpt_neo_poverty_lens/
