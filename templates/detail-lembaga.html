@@ -3,27 +3,29 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Detail Lembaga</title>
+        <title>Detail Lembaga - PovertyLens</title>
         <link
             rel="icon"
             type="image/x-icon"
             href="/static/images/onlylogo-colorful.svg"
         />
         <link
-            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
             rel="stylesheet"
         />
         <link rel="stylesheet" href="/static/css/style.css" />
         <link
-            href="{{url_for('static',filename='css/output.css')}}"
+            href="{{ url_for('static', filename='css/output.css') }}"
             rel="stylesheet"
         />
     </head>
     <body>
         {% include 'partials/navbar.html' %}
+
+        <!-- Detail Lembaga -->
+
         <section class="p-6 bg-white top-0 px-20">
             <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6">
-                <!-- Tombol Kembali -->
                 <a
                     href="{{ url_for('dtLembaga') }}"
                     class="flex items-center mb-4 text-blue-500 hover:underline"
@@ -45,31 +47,36 @@
                     Kembali
                 </a>
 
-                <!-- Logo Lembaga -->
                 <div class="flex items-center mb-4">
                     <img
-                        src="{{ detail[1] }}"
-                        alt="{{ detail[0] }}"
+                        src="{{ detail.logo_url }}"
+                        alt="{{ detail.nama }}"
                         class="w-24 h-auto mr-4"
                     />
-                    <h1 class="text-2xl font-semibold">{{ detail[0] }}</h1>
+                    <h1 class="text-2xl font-semibold">{{ detail.nama }}</h1>
                 </div>
 
                 <!-- Informasi Lembaga -->
                 <div class="mt-4">
-                    <p><strong>Alamat Kantor:</strong> {{ detail[2] }}</p>
-                    <p><strong>Telepon:</strong> {{ detail[3] }}</p>
-                    <p><strong>Email:</strong> {{ detail[4] }}</p>
+                    <p>
+                        <strong>Alamat Kantor:</strong> {{ detail.alamat_kantor
+                        }}
+                    </p>
+                    <p><strong>Telepon:</strong> {{ detail.telepon }}</p>
+                    <p><strong>Email:</strong> {{ detail.email }}</p>
                     <p>
                         <strong>Website Resmi:</strong>
                         <a
-                            href="{{ detail[5] }}"
+                            href="{{ detail.web_resmi }}"
                             class="text-blue-500 underline"
-                            >{{ detail[5] }}</a
+                            >{{ detail.web_resmi }}</a
                         >
                     </p>
-                    <p><strong>Deskripsi:</strong> {{ detail[6] }}</p>
-                    <p><strong>Informasi Tambahan:</strong> {{ detail[7] }}</p>
+                    <p><strong>Deskripsi:</strong> {{ detail.deskripsi }}</p>
+                    <p>
+                        <strong>Informasi Tambahan:</strong> {{ detail.informasi
+                        }}
+                    </p>
                 </div>
             </div>
         </section>

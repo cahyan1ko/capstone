@@ -21,7 +21,8 @@
     </head>
     <body>
         {% include 'partials/navbar.html' %}
-        <!-- Home -->
+
+        <!-- Daftar Lembaga -->
 
         <section class="p-6 bg-white top-0 px-20">
             <div class="flex items-center justify-between mb-10 pt-5">
@@ -34,7 +35,9 @@
                     <input
                         type="text"
                         placeholder="Search..."
+                        id="searchInput"
                         class="border border-gray-300 rounded-lg p-2 w-full"
+                        oninput="filterLembaga()"
                     />
                 </div>
             </div>
@@ -42,12 +45,12 @@
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
                 {% for lembaga in lembaga_data %}
                 <a
-                    href="detail-lembaga/{{ lembaga[0] }}"
-                    class="flex flex-col items-start border border-gray-300 rounded-lg p-4 relative transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-gray-100"
+                    href="{{ url_for('detailLembaga', lembaga_id=lembaga.id) }}"
+                    class="lembaga-item flex flex-col items-start border border-gray-300 rounded-lg p-4 relative transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-gray-100"
                 >
                     <img
-                        src="{{ lembaga[2] }}"
-                        alt="{{ lembaga[1] }}"
+                        src="{{ lembaga.logo_url }}"
+                        alt="{{ lembaga.nama }}"
                         class="w-30 h-auto mb-2"
                     />
                     <div class="absolute top-0 right-0 mt-2 mr-2">
@@ -66,12 +69,29 @@
                             />
                         </svg>
                     </div>
-                    <p class="text-left w-full mt-auto">{{ lembaga[1] }}</p>
-                    <!-- Tampilkan nama lembaga -->
+                    <p class="text-left w-full mt-auto">{{ lembaga.nama }}</p>
                 </a>
-
                 {% endfor %}
             </div>
         </section>
+        <script>
+            function filterLembaga() {
+                const searchInput = document
+                    .getElementById("searchInput")
+                    .value.toLowerCase()
+                const lembagaItems = document.querySelectorAll(".lembaga-item")
+
+                lembagaItems.forEach((item) => {
+                    const lembagaName = item
+                        .querySelector("p")
+                        .innerText.toLowerCase()
+                    if (lembagaName.includes(searchInput)) {
+                        item.style.display = "block"
+                    } else {
+                        item.style.display = "none"
+                    }
+                })
+            }
+        </script>
     </body>
 </html>

@@ -53,14 +53,12 @@
         <script>
             var map = L.map("mapid").setView([-6.858944, 109.147861], 13)
 
-            // Add tile layer (you can switch this to a satellite layer if desired)
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
                 attribution:
                     'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
                 maxZoom: 18,
             }).addTo(map)
 
-            // Add marker at the location
             var marker = L.marker([-6.858944, 109.147861])
                 .addTo(map)
                 .bindPopup(
@@ -68,19 +66,15 @@
                 )
                 .openPopup()
 
-            // Fungsi untuk mengambil koordinat dari peta
             map.on("click", function (e) {
                 var lat = e.latlng.lat
                 var lng = e.latlng.lng
 
-                // Perbarui input dengan koordinat yang diambil
                 document.getElementById("coordInput").value = lat + ", " + lng
 
-                // Pindahkan marker ke lokasi yang diklik
                 marker.setLatLng([lat, lng])
             })
 
-            // Fungsi untuk mengambil koordinat dari inputan
             document.getElementById("getCoord").onclick = function () {
                 var coords = document
                     .getElementById("coordInput")
@@ -88,16 +82,13 @@
                 var lat = parseFloat(coords[0])
                 var lng = parseFloat(coords[1])
 
-                // Pindahkan peta ke koordinat yang dimasukkan
                 map.setView([lat, lng], 13)
                 marker.setLatLng([lat, lng])
             }
 
-            // Fungsi untuk mengirimkan koordinat
             document.getElementById("submit").onclick = function () {
                 var coords = document.getElementById("coordInput").value
                 alert("Koordinat yang dikirim: " + coords)
-                // Di sini Anda dapat menambahkan logika untuk mengirimkan koordinat ke server atau melakukan aksi lainnya
             }
         </script>
     </body>

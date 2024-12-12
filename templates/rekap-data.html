@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/style.css') }}"
+        />
+        <link
+            href="{{ url_for('static', filename='css/output.css') }}"
+            rel="stylesheet"
+        />
+        <title>PovertyLens - Map Of Poor Areas</title>
+        <link
+            rel="icon"
+            type="image/x-icon"
+            href="{{ url_for('static', filename='images/onlylogo-colorful.svg') }}"
+        />
+    </head>
+
+    <body class="">
+        {% include 'partials/navbar.html'%}
+        <section class="p-6 bg-white top-0 px-20">
+            <div class="px-44 pt-5">
+                <h1 class="font-bold text-2xl pt-6">Rekap Data</h1>
+                <h1 class="">Terakhir Diperbarui : 25 Januari 2024</h1>
+
+                <div class="flex justify-between mt-4">
+                    <div
+                        class="h-10 w-36 border-gray-600 border justify-center rounded-lg py-2 flex"
+                    >
+                        <h1 class="font-bold mr-3">2021 - 2023</h1>
+                        <img
+                            src="{{ url_for('static', filename='images/arrowtri.svg') }}"
+                            class="h-3 mt-1.5"
+                            alt="Arrow"
+                        />
+                    </div>
+
+                    <div
+                        class="h-10 w-36 bg-[#F44336] bg-opacity-35 justify-center rounded-lg py-2 flex"
+                        style="background-color: #f44336; color: white"
+                    >
+                        <h1 class="font-bold mr-3 text-white">Download</h1>
+                        <img
+                            src="{{ url_for('static', filename='images/download.svg') }}"
+                            class="h-5 mt-0.5"
+                            alt="Download"
+                        />
+                    </div>
+                </div>
+
+                <div class="container mx-auto p-4">
+                    <div
+                        class="overflow-x-auto mt-5 border border-black rounded-xl"
+                    >
+                        <table
+                            class="w-full bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden"
+                        >
+                            <thead>
+                                <tr>
+                                    <th
+                                        rowspan="3"
+                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center align-middle rounded-tl-lg"
+                                    >
+                                        Wilayah Inflasi
+                                    </th>
+                                    <th
+                                        colspan="9"
+                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center rounded-tr-lg"
+                                    >
+                                        Kemiskinan
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th
+                                        colspan="3"
+                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
+                                    >
+                                        Garis Kemiskinan (Rp/Kapita/Bulan)
+                                    </th>
+                                    <th
+                                        colspan="3"
+                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
+                                    >
+                                        Jumlah Penduduk Miskin (Ribu Orang)
+                                    </th>
+                                    <th
+                                        colspan="3"
+                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
+                                    >
+                                        Persentase Penduduk Miskin (RpO)
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th
+                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
+                                    >
+                                        2021
+                                    </th>
+                                    <th
+                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
+                                    >
+                                        2022
+                                    </th>
+                                    <th
+                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
+                                    >
+                                        2023
+                                    </th>
+                                    <th
+                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
+                                    >
+                                        2021
+                                    </th>
+                                    <th
+                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
+                                    >
+                                        2022
+                                    </th>
+                                    <th
+                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
+                                    >
+                                        2023
+                                    </th>
+                                    <th
+                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
+                                    >
+                                        2021
+                                    </th>
+                                    <th
+                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
+                                    >
+                                        2022
+                                    </th>
+                                    <th
+                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center rounded-br-lg"
+                                    >
+                                        2023
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td
+                                        class="px-6 py-4 border border-gray-300 text-center font-semibold"
+                                    >
+                                        Kota Tegal
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 border border-gray-300 text-center"
+                                    >
+                                        523.413.000
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 border border-gray-300 text-center"
+                                    >
+                                        565.826.000
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 border border-gray-300 text-center"
+                                    >
+                                        623.617.000
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 border border-gray-300 text-center"
+                                    >
+                                        20,270
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 border border-gray-300 text-center"
+                                    >
+                                        19,780
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 border border-gray-300 text-center"
+                                    >
+                                        19,220
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 border border-gray-300 text-center"
+                                    >
+                                        8,120
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 border border-gray-300 text-center"
+                                    >
+                                        7,910
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 border border-gray-300 text-center"
+                                    >
+                                        7,680
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        class="px-6 py-4 border border-gray-300 text-center font-semibold"
+                                    >
+                                        Jawa Tengah
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 border border-gray-300 text-center"
+                                    >
+                                        409.193.000
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 border border-gray-300 text-center"
+                                    >
+                                        438.833.000
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 border border-gray-300 text-center"
+                                    >
+                                        477.580.000
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 border border-gray-300 text-center"
+                                    >
+                                        4.109.750
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 border border-gray-300 text-center"
+                                    >
+                                        3.831.440
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 border border-gray-300 text-center"
+                                    >
+                                        3.791.500
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 border border-gray-300 text-center"
+                                    >
+                                        11,790
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 border border-gray-300 text-center"
+                                    >
+                                        10,930
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 border border-gray-300 text-center"
+                                    >
+                                        10,770
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

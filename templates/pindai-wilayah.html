@@ -28,10 +28,10 @@
 
         <style>
             #mapid {
-                width: 100%; /* Mengatur lebar peta 100% dari div induknya */
-                height: 300px; /* Mengatur tinggi peta */
-                border-radius: 8px; /* Menambahkan radius untuk sudut yang lebih halus */
-                margin-bottom: 20px; /* Menambahkan margin di bawah peta */
+                width: 100%;
+                height: 300px;
+                border-radius: 8px;
+                margin-bottom: 20px;
             }
             body {
                 height: 4000px;
@@ -40,20 +40,65 @@
     </head>
     <body>
         {% include 'partials/navbar.html' %}
-        <!-- Home -->
+        <!-- Pindai Wilayah -->
         <section class="p-6 bg-white top-0 px-20">
             <div class="flex gap-8 pt-5">
-                <!-- Kolom kiri untuk form -->
                 <div class="p-6 rounded-lg w-2/5 border border-black">
                     <div id="mapid" class=""></div>
-                    <button
-                        id="captureButton"
-                        class="bg-black text-white px-4 py-2 rounded mt-4"
-                    >
-                        Capture Map
-                    </button>
+                    <div id="previewContainerMessage" class="mt-4"></div>
+                    <div class="flex items-center mt-4 justify-between">
+                        <div class="flex items-center">
+                            <button
+                                id="captureButton"
+                                class="text-white px-4 py-2 rounded"
+                                style="
+                                    background-color: #000000;
+                                    font-size: 14px;
+                                    font-weight: 500;
+                                "
+                            >
+                                Capture Map
+                            </button>
+                            <span
+                                id="captureSuccess"
+                                class="ml-3 hidden font-bold"
+                                style="
+                                    color: #22c55e;
+                                    font-size: 14px;
+                                    font-weight: 500;
+                                "
+                            >
+                                ✔️ Tersimpan
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <button
+                                id="previewCaptureButton"
+                                class="text-white px-4 py-2 rounded"
+                                style="
+                                    background-color: #1e90ff;
+                                    font-size: 14px;
+                                    font-weight: 500;
+                                    margin-right: 5px;
+                                "
+                            >
+                                Preview
+                            </button>
+                            <button
+                                id="resetCaptureButton"
+                                class="bg-red-200 text-white px-4 py-2 rounded"
+                                style="
+                                    background-color: #dc143c;
+                                    font-size: 14px;
+                                    font-weight: 500;
+                                "
+                            >
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                    <div id="previewContainer" class="mt-4"></div>
 
-                    <!-- Menampilkan peta di dalam div -->
                     <div class="mb-4 relative">
                         <label
                             for="koordinat"
@@ -67,27 +112,26 @@
                                 id="koordinat"
                                 class="mt-1 block w-full border border-gray-300 rounded-md p-2 pr-10"
                                 placeholder="Koordinat"
-                                onclick="this.select();"
+                                readonly
                             />
-                            <button
-                                onclick="toggleMapDropdown()"
-                                class="absolute right-2 bg-blue-500 text-white px-3 py-1 rounded-md mt-1"
-                            >
-                                ambil dari maps
-                            </button>
-                        </div>
-
-                        <!-- Dropdown Map -->
-                        <div
-                            id="mapDropdown"
-                            class="hidden absolute z-10 w-full bg-white border border-gray-300 rounded-md mt-1"
-                        >
-                            <div
-                                id="mapid"
-                                style="width: 100%; height: 300px"
-                            ></div>
                         </div>
                     </div>
+
+                    <div class="mt-4">
+                        <label
+                            for="kelurahanDisplay"
+                            class="block text-sm font-medium text-gray-700"
+                            >Kelurahan</label
+                        >
+                        <input
+                            type="text"
+                            id="kelurahanDisplay"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                            placeholder="Kelurahan"
+                            readonly
+                        />
+                    </div>
+
                     <div class="mb-4">
                         <label
                             for="populasi"
@@ -101,19 +145,7 @@
                             placeholder="Input populasi penduduk"
                         />
                     </div>
-                    <div class="mb-4">
-                        <label
-                            for="deskripsi"
-                            class="block text-sm font-medium text-gray-700"
-                            >Deskripsi Area</label
-                        >
-                        <textarea
-                            id="deskripsi"
-                            class="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                            rows="3"
-                            placeholder="Deskripsikan area..."
-                        ></textarea>
-                    </div>
+
                     <div class="mb-4">
                         <label
                             for="bantuan"
@@ -127,36 +159,12 @@
                             placeholder="Bantuan yang dibutuhkan"
                         />
                     </div>
-                    <div class="mb-4">
-                        <label
-                            for="tahun"
-                            class="block text-sm font-medium text-gray-700"
-                            >Tahun / Tanggal Pengambilan Gambar</label
-                        >
-                        <input
-                            type="date"
-                            id="tahun"
-                            class="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                        />
-                    </div>
-                    <div class="mb-4">
-                        <label
-                            for="kondisi"
-                            class="block text-sm font-medium text-gray-700"
-                            >Kondisi Lingkungan</label
-                        >
-                        <textarea
-                            id="kondisi"
-                            class="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                            rows="3"
-                            placeholder="Kondisi lingkungan..."
-                        ></textarea>
-                    </div>
+
                     <div class="mb-4">
                         <label
                             for="laporan"
                             class="block text-sm font-medium text-gray-700"
-                            >Tuliskan Laporan Anda di sini...</label
+                            >Laporan anda(Opsional)</label
                         >
                         <textarea
                             id="laporan"
@@ -165,76 +173,215 @@
                             placeholder="Tuliskan laporan Anda..."
                         ></textarea>
                     </div>
-                    <button class="bg-black text-white px-4 py-2 rounded mt-4">
+                    <button
+                        id="submitButton"
+                        class="bg-black text-white px-4 py-2 rounded mt-4"
+                    >
                         Submit
                     </button>
                 </div>
-
-                <!-- Kolom kanan untuk bagian Answering -->
                 <div
                     class="rounded-lg border-gray-300 w-3/5 p-6 border border-black"
                 >
                     <h2 class="text-xl font-bold mb-4 text-center">
                         Answering
                     </h2>
+                    <div id="answeringContainer">
+                        <div id="resultImgProcessing"></div>
+                    </div>
                 </div>
             </div>
         </section>
         <script>
             var map = L.map("mapid", {
-                zoomControl: false, // Nonaktifkan kontrol zoom
-                scrollWheelZoom: false, // Nonaktifkan zoom dengan scroll mouse
-                dragging: true, // Masih bisa melakukan drag peta
+                zoomControl: false,
+                scrollWheelZoom: false,
+                dragging: true,
+                doubleClickZoom: false,
             }).setView([-6.858944, 109.147861], 16)
 
-            // Add tile layer
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
                 attribution:
                     'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
                 maxZoom: 18,
             }).addTo(map)
 
-            // Fungsi untuk mengambil koordinat dari peta
-            map.on("click", function (e) {
-                var lat = e.latlng.lat
-                var lng = e.latlng.lng
+            var southWest = L.latLng(-6.8985, 109.0741)
+            var northEast = L.latLng(-6.8441, 109.1616)
+            var bounds = L.latLngBounds(southWest, northEast)
 
-                // Perbarui input dengan koordinat yang diambil
-                document.getElementById("koordinat").value = lat + ", " + lng
+            map.setMaxBounds(bounds)
+
+            map.on("drag", function () {
+                map.panInsideBounds(bounds, { animate: true })
             })
 
-            document.getElementById("captureButton").onclick = function () {
-                html2canvas(document.getElementById("mapid"), {
-                    useCORS: true, // Menyediakan dukungan CORS untuk gambar jika ada
-                }).then(function (canvas) {
-                    // Mengonversi canvas menjadi gambar
-                    var imgData = canvas.toDataURL("image/png")
+            document.getElementById("captureButton").onclick =
+                async function () {
+                    var previewContainerMessage = document.getElementById(
+                        "previewContainerMessage",
+                    )
+                    previewContainerMessage.innerHTML = ""
 
-                    // Membuat elemen link untuk mengunduh gambar
-                    var link = document.createElement("a")
-                    link.href = imgData
-                    link.download = "map_capture.png"
-                    document.body.appendChild(link)
-                    link.click()
-                    document.body.removeChild(link) // Menghapus link setelah klik
-                })
-            }
-            function toggleMapDropdown() {
-                var dropdown = document.getElementById("mapDropdown")
-                dropdown.classList.toggle("hidden")
-            }
+                    var center = map.getCenter()
+                    var centerLat = center.lat
+                    var centerLng = center.lng
 
-            // Fungsi untuk menangani klik di peta
-            map.on("click", function (e) {
-                var lat = e.latlng.lat
-                var lng = e.latlng.lng
+                    document.getElementById("koordinat").value =
+                        centerLat + ", " + centerLng
 
-                // Perbarui input dengan koordinat yang diambil
-                document.getElementById("koordinat").value = lat + ", " + lng
+                    try {
+                        const response = await fetch(
+                            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${centerLat}&lon=${centerLng}`,
+                        )
+                        const data = await response.json()
 
-                // Menyembunyikan dropdown setelah memilih koordinat
-                document.getElementById("mapDropdown").classList.add("hidden")
-            })
+                        // const city =
+                        //     data.address.city ||
+                        //     data.address.town ||
+                        //     data.address.village ||
+                        //     "Tidak ditemukan"
+
+                        // if (city !== "Tegal") {
+                        //     alert(
+                        //         "Koordinat berada di luar Kota Tegal. Silakan pilih lokasi yang berada dalam Kota Tegal.",
+                        //     )
+                        //     return
+                        // }
+
+                        const kelurahan =
+                            data.address.suburb ||
+                            data.address.village ||
+                            "Tidak ditemukan"
+
+                        console.log("Kelurahan:", kelurahan)
+
+                        var kelurahanInput =
+                            document.getElementById("kelurahanDisplay")
+                        kelurahanInput.value = kelurahan
+                    } catch (error) {
+                        console.error("Gagal mengambil kelurahan:", error)
+                    }
+
+                    html2canvas(document.getElementById("mapid"), {
+                        useCORS: true,
+                    })
+                        .then(function (canvas) {
+                            var imgData = canvas.toDataURL("image/png")
+
+                            var previewContainer =
+                                document.getElementById("previewContainer")
+                            previewContainer.dataset.image = imgData
+
+                            var captureSuccess =
+                                document.getElementById("captureSuccess")
+                            captureSuccess.classList.remove("hidden")
+
+                            console.log("Capture berhasil:", imgData)
+                        })
+                        .catch(function (error) {
+                            console.error("Gagal capture peta:", error)
+                        })
+                }
+
+            document.getElementById("previewCaptureButton").onclick =
+                function () {
+                    var previewContainer =
+                        document.getElementById("previewContainer")
+                    var imgData = previewContainer.dataset.image
+
+                    previewContainer.innerHTML = ""
+                    previewContainerMessage.innerHTML = ""
+
+                    if (imgData && imgData.startsWith("data:image/png")) {
+                        var previewImage = document.createElement("img")
+                        previewImage.src = imgData
+                        previewImage.style.maxWidth = "100%"
+                        previewImage.style.border = "1px solid #ddd"
+                        previewImage.style.borderRadius = "8px"
+                        previewImage.style.marginTop = "10px"
+
+                        previewContainer.appendChild(previewImage)
+                    } else {
+                        previewContainerMessage.innerHTML =
+                            "<p style='color: red;'>Belum ada hasil capture yang tersimpan.</p>"
+                    }
+                }
+
+            document.getElementById("resetCaptureButton").onclick =
+                function () {
+                    var captureSuccess =
+                        document.getElementById("captureSuccess")
+                    captureSuccess.classList.add("hidden")
+
+                    var previewContainer =
+                        document.getElementById("previewContainer")
+                    previewContainer.innerHTML = ""
+                    delete previewContainer.dataset.image
+
+                    var koordinatInput = document.getElementById("koordinat")
+                    koordinatInput.value = ""
+
+                    var kelurahanInput =
+                        document.getElementById("kelurahanDisplay")
+                    kelurahanInput.value = ""
+                }
+
+            document.getElementById("submitButton").onclick =
+                async function () {
+                    const previewContainer =
+                        document.getElementById("previewContainer")
+                    const image = previewContainer.dataset.image
+
+                    if (!image) {
+                        alert("Tidak ada gambar untuk diproses.")
+                        return
+                    }
+
+                    const response = await fetch("/process", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded",
+                        },
+                        body: new URLSearchParams({ image: image }),
+                    })
+
+                    const result = await response.json()
+                    const resultContainer = document.getElementById(
+                        "resultImgProcessing",
+                    )
+                    resultContainer.innerHTML = ""
+
+                    if (result.error) {
+                        resultContainer.innerHTML = `<p style="color: red;">Error: ${result.error}</p>`
+                    } else {
+                        const overlayImage = document.createElement("img")
+                        overlayImage.src =
+                            "data:image/png;base64," + result.overlay_image
+                        overlayImage.style.width = "100%"
+                        overlayImage.style.maxWidth = "100%"
+                        overlayImage.style.marginBottom = "20px"
+
+                        resultContainer.appendChild(overlayImage)
+
+                        const percentageList = document.createElement("ul")
+                        percentageList.style.listStyleType = "none"
+                        percentageList.style.padding = "0"
+
+                        for (const [category, percentage] of Object.entries(
+                            result.percentages,
+                        )) {
+                            const listItem = document.createElement("li")
+                            listItem.textContent = `${category}: ${percentage.toFixed(
+                                2,
+                            )}%`
+                            listItem.style.marginBottom = "5px"
+                            percentageList.appendChild(listItem)
+                        }
+
+                        resultContainer.appendChild(percentageList)
+                    }
+                }
         </script>
     </body>
 </html>

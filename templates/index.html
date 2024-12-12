@@ -7,9 +7,9 @@
             href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
             rel="stylesheet"
         />
-        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="/static/css/style.css" />
         <link
-            href="{{url_for('static',filename='css/output.css')}}"
+            href="{{ url_for('static', filename='css/output.css') }}"
             rel="stylesheet"
         />
         <title>PovertyLens - Map Of Poor Areas</title>
@@ -18,88 +18,14 @@
             type="image/x-icon"
             href="/static/images/onlylogo-colorful.svg"
         />
-        <style>
-            .bubble-icon {
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                background-color: transparent; /* Latar belakang transparan */
-                cursor: pointer; /* Kursor pointer saat hover */
-                z-index: 1000; /* Pastikan di atas elemen lain */
-            }
-
-            .bubble-icon img {
-                width: 50px; /* Ukuran icon */
-                height: 50px; /* Ukuran icon */
-            }
-
-            .chat-room {
-                position: fixed; /* Memposisikan chat room */
-                bottom: 80px; /* Jarak dari bawah */
-                right: 20px; /* Jarak dari kanan */
-                width: 300px; /* Lebar chat room */
-                background-color: white; /* Latar belakang putih */
-                border: 1px solid #ddd; /* Garis batas */
-                border-radius: 8px; /* Sudut melengkung */
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Bayangan */
-                display: flex;
-                flex-direction: column; /* Mengatur arah flex */
-                z-index: 1000; /* Menempatkan chat room di atas elemen lain */
-            }
-
-            .chat-header {
-                background-color: #f1f1f1; /* Warna latar belakang header */
-                padding: 10px; /* Ruang dalam header */
-                display: flex; /* Flexbox untuk header */
-                justify-content: space-between; /* Rata kanan dan kiri */
-                align-items: center; /* Vertikal rata tengah */
-                border-top-left-radius: 8px; /* Sudut melengkung kiri atas */
-                border-top-right-radius: 8px; /* Sudut melengkung kanan atas */
-            }
-
-            .chat-body {
-                padding: 10px; /* Ruang dalam body */
-                height: 200px; /* Tinggi body */
-                overflow-y: auto; /* Scroll jika isi melebihi tinggi */
-            }
-
-            .chat-footer {
-                display: flex; /* Flexbox untuk footer */
-                padding: 10px; /* Ruang dalam footer */
-            }
-
-            .chat-footer input {
-                flex: 1; /* Membuat input mengambil ruang yang tersisa */
-                padding: 5px; /* Ruang dalam input */
-                border: 1px solid #ddd; /* Garis batas */
-                border-radius: 4px; /* Sudut melengkung */
-            }
-
-            .chat-footer button {
-                margin-left: 5px; /* Jarak antara input dan button */
-                padding: 6px 10px; /* Ruang dalam button */
-                background-color: #007bff; /* Warna latar belakang button */
-                color: white; /* Warna teks */
-                border: none; /* Menghapus garis batas */
-                border-radius: 4px; /* Sudut melengkung */
-                cursor: pointer; /* Kursor pointer saat hover */
-            }
-
-            .hidden-chat {
-                display: none;
-            }
-        </style>
     </head>
-
     <body>
-        <!-- navbar -->
         {% include 'partials/navbar.html' %}
 
-        <!-- home -->
+        <!-- Landing Page -->
         <section
             class="w-full h-full justify-center text-center flex bg-gradient-to-b from-gray-400 to-white absolute top-0"
         >
-            <!-- Konten Utama -->
             <div
                 class="relative w-[40rem] font-poppins group py-[13rem] flex flex-col items-center"
             >
@@ -130,9 +56,26 @@
             </div>
         </section>
 
-        <!-- pengertian -->
         <section
-            class="w-full h-[40rem] py-[15rem] justify-center text-left px-40 bg-gradient-to-b from-gray-200 to-white font-poppins"
+            class="py-[15rem] justify-center text-left px-40 bg-gradient-to-b from-gray-200 to-white font-poppins mt-[150px]"
+        ></section>
+
+        <section
+            class="justify-center text-left px-40 bg-gradient-to-b from-gray-200 to-white font-poppins mt-[150px]"
+        >
+            <h1 class="text-center text-black font-bold text-2xl pt-4">
+                Persentase Penduduk Miskin
+            </h1>
+            <h1 class="text-center text-red-400 font-bold text-2xl">
+                Kota Tegal
+            </h1>
+            <div>
+                <canvas id="kemiskinanChart" width="400" height="200"></canvas>
+            </div>
+        </section>
+
+        <section
+            class="py-[15rem] justify-center text-left px-40 bg-gradient-to-b from-gray-200 to-white font-poppins"
         >
             <img src="/static/images/logofixblack.svg" alt="" class="pb-5" />
             <h1 class="text-black">
@@ -152,9 +95,8 @@
             </h1>
         </section>
 
-        <!-- fitur -->
         <section
-            class="w-full h-[40rem] py-[8rem] justify-center text-center px-40 bg-gradient-to-b from-gray-200 to-white font-poppins"
+            class="py-[8rem] justify-center text-center px-40 bg-gradient-to-b from-gray-200 to-white font-poppins"
         >
             <h1 class="text-black font-bold text-2xl">
                 Bagaimana sih Fitur AI
@@ -188,9 +130,8 @@
             </h1>
         </section>
 
-        <!-- cara pakai -->
         <section
-            class="w-full h-[40rem] py-[5rem] justify-center text-center px-40 bg-gradient-to-b from-gray-200 to-white font-poppins"
+            class="py-[5rem] justify-center text-center px-40 bg-gradient-to-b from-gray-200 to-white font-poppins"
         >
             <h1 class="text-black font-bold text-2xl">
                 Terus cara pakai Fitur AI
@@ -232,7 +173,6 @@
             </div>
         </section>
 
-        <!-- FOOTER -->
         {% include 'partials/footer.html' %}
 
         <!-- Bubble Icon -->
@@ -247,7 +187,9 @@
                 <button id="close-chat" class="close-btn">X</button>
             </div>
             <div class="chat-body" id="chat-body">
-                <p>Selamat datang di PovertyLens! Ada yang bisa kami bantu?</p>
+                <p class="chatbot-message">
+                    Selamat datang di PovertyLens! Ada yang bisa kami bantu?
+                </p>
             </div>
             <div class="chat-footer">
                 <input
@@ -259,12 +201,54 @@
             </div>
         </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
         <script>
+            const tahun = {{ tahun | tojson }};
+            const presentase_penduduk_miskin = {{ presentase_penduduk_miskin | tojson }};
+
+            console.log('Data Tahun:', tahun);
+            console.log('Data Presentase Penduduk Miskin:', presentase_penduduk_miskin);
+
+            const ctx = document.getElementById('kemiskinanChart').getContext('2d');
+            const kemiskinanChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: tahun,
+                    datasets: [{
+                        label: 'Persentase',
+                        data: presentase_penduduk_miskin,
+                        borderColor: 'rgba(255, 152, 0, 1)',
+                        backgroundColor: '#FF9800',
+                        fill: false,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Presentase Penduduk Miskin (%)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Tahun'
+                            }
+                        }
+                    }
+                }
+            });
+
+
+
             const bubbleIcon = document.getElementById("bubble-icon")
             const chatRoom = document.getElementById("chat-room")
             const closeChat = document.getElementById("close-chat")
 
-            // Menampilkan chat room saat bubble icon diklik
             bubbleIcon.onclick = function () {
                 chatRoom.classList.toggle("hidden-chat")
             }
@@ -273,12 +257,11 @@
                 const chatBody = document.getElementById("chat-body")
                 const userInput = document.getElementById("chat-input").value
                 if (userInput) {
-                    // Tampilkan pesan pengguna
                     const userMessage = document.createElement("p")
-                    userMessage.textContent = `Anda: ${userInput}`
+                    userMessage.classList.add("user-message")
+                    userMessage.textContent = userInput
                     chatBody.appendChild(userMessage)
 
-                    // AJAX untuk mengirim pesan ke server
                     fetch("/send_message", {
                         method: "POST",
                         headers: {
@@ -288,23 +271,20 @@
                     })
                         .then((response) => response.json())
                         .then((data) => {
-                            // Tampilkan respons dari chatbot
                             const botMessage = document.createElement("p")
-                            botMessage.textContent = `PovertyLens: ${data.response}`
+                            botMessage.classList.add("chatbot-message")
+                            botMessage.textContent = data.response
                             chatBody.appendChild(botMessage)
 
-                            // Scroll ke bagian bawah chat
                             chatBody.scrollTop = chatBody.scrollHeight
                         })
 
-                    // Kosongkan input setelah mengirim
                     document.getElementById("chat-input").value = ""
                 }
             }
 
-            // Menyembunyikan chat room saat tombol close diklik
             closeChat.onclick = function () {
-                chatRoom.classList.add("hidden") // Menyembunyikan chat room
+                chatRoom.classList.add("hidden")
             }
         </script>
     </body>

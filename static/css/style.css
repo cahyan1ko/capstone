@@ -9,6 +9,107 @@ section{
     height: 100vh;
 }
 
+.bubble-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 50%;
+    background-color: transparent;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.bubble-icon img {
+    width: 50px;
+    height: 50px;
+}
+
+.chat-room {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 300px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    max-height: 400px;
+    overflow: hidden;
+}
+
+.chat-header {
+    background-color: #f1f1f1;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.chat-body {
+    flex-grow: 1;
+    padding: 10px;
+    height: 200px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.chat-footer {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.chat-footer input {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.chat-footer button {
+    margin-left: 5px;
+    padding: 6px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.hidden-chat {
+    display: none;
+}
+
+.user-message {
+    align-self: flex-end;
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 15px 15px 0 15px;
+    max-width: 70%;
+}
+
+.chatbot-message {
+    align-self: flex-start;
+    background-color: #f1f1f1;
+    color: #333333;
+    padding: 8px 12px;
+    border-radius: 15px 15px 15px 0;
+    max-width: 70%;
+}
+
+
 .title-lembaga {
     font-size: 28px;
 }
@@ -17,4 +118,14 @@ section{
     width: 1200px;
     margin: 0 auto;
     border-top: 1px solid #000000;
+}
+
+.chart-index {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }

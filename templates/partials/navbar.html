@@ -1,6 +1,20 @@
 <style>
     .navbar {
+        position: fixed;
+        top: 20px; /* Sesuaikan jarak atas jika perlu */
+        left: 50%;
+        transform: translateX(-50%);
         z-index: 3000;
+        width: auto; /* Biarkan lebar navbar otomatis sesuai konten */
+        background-color: rgba(
+            244,
+            244,
+            244,
+            0.9
+        ); /* Menambahkan transparansi untuk efek mengambang */
+        border-radius: 20px; /* Sudut rounded */
+        padding: 10px 20px; /* Padding bisa disesuaikan */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Efek bayangan */
     }
 </style>
 
@@ -11,14 +25,13 @@
         <a
             href="{{ url_for('index') }}"
             class="text-black hover:text-gray-700 {% if request.path == '/' %}font-bold{% endif %}"
+            >Beranda</a
         >
-            Beranda
-        </a>
     </div>
     <div class="hidden md:flex w-40 justify-center">
         <a
             href="{{ url_for('pindaiWilayah') }}"
-            class="text-black hover:text-gray-700"
+            class="text-black hover:text-gray-700 {% if request.path == url_for('pindaiWilayah') or '/pindai-wilayah' in request.path %}font-bold{% endif %}"
             >Pindai Wilayah</a
         >
     </div>
@@ -32,16 +45,17 @@
     <div class="hidden md:flex w-40 justify-center">
         <a
             href="{{ url_for('dtLembaga') }}"
-            class="text-black hover:text-gray-700 {% if request.path == url_for('dtLembaga') or '/detail-lembaga' in request.path %}font-bold{% endif %}"
+            class="text-black hover:text-gray-700 {% if request.path == url_for('dtLembaga') or '/daftar-lembaga' in request.path %}font-bold{% endif %}"
+            >Daftar Lembaga</a
         >
-            Daftar Lembaga
-        </a>
     </div>
     <div class="hidden md:flex w-40 justify-center">
-        <a href="#" class="text-black hover:text-gray-700">Rekap Data</a>
+        <a
+            href="{{ url_for('rekapData') }}"
+            class="text-black hover:text-gray-700 {% if request.path == url_for('rekapData') or '/rekap-data' in request.path %}font-bold{% endif %}"
+            >Rekap Data</a
+        >
     </div>
-
-    <!-- Tombol Menu untuk Mobile -->
     <div class="md:hidden ml-4">
         <button id="menu-toggle" class="focus:outline-none">
             <svg
