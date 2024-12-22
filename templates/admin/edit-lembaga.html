@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Admin | Poverty Lens</title>
+        <link
+            rel="icon"
+            type="image/x-icon"
+            href="/static/images/onlylogo-colorful.svg"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    </head>
+
+    <body class="bg-white font-poppins">
+        <div class="flex h-auto">
+            <!-- Sidebar -->
+            <aside
+                class="w-64 bg-[#C1BAA1] border border-white text-black flex flex-col fixed top-0 left-0 bottom-0 rounded-lg m-4 z-10"
+            >
+                <div
+                    class="p-6 text-center font-bold text-xl border-b border-white"
+                >
+                    <img src="/static/images/logocolorful.svg" alt="" />
+                </div>
+                <nav class="flex-grow overflow-auto mt-3">
+                    <a
+                        href="{{ url_for('admin') }}"
+                        class="block py-2.5 px-4 mx-3 hover:bg-[#D7D3BF] hover:rounded-xl"
+                        >Dashboard</a
+                    >
+                    <a
+                        href="{{ url_for('data_lembaga') }}"
+                        class="block py-2.5 px-4 mx-3 hover:bg-[#D7D3BF] hover:rounded-xl"
+                        >Data Lembaga</a
+                    >
+                </nav>
+                <div class="p-4 border-t border-white">
+                    <a
+                        href="{{ url_for('logout') }}"
+                        class="block py-2.5 px-4 hover:bg-blue-800 text-center"
+                        >Logout</a
+                    >
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-grow bg-white p-8 ml-64">
+                <header class="flex justify-between items-center mb-8">
+                    <h1 class="text-2xl font-bold">Edit Lembaga</h1>
+                </header>
+
+                <!-- Formulir Edit Lembaga -->
+                <section class="bg-white shadow-lg rounded-lg p-6 space-y-8">
+                    <form
+                        action="{{ url_for('edit_lembaga', id=lembaga.id) }}"
+                        method="POST"
+                    >
+                        <div class="grid grid-cols-2 gap-6">
+                            <!-- Info Lembaga -->
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block font-medium text-lg"
+                                        >Logo Saat Ini</label
+                                    >
+                                    <img
+                                        src="{{ lembaga.logo_url if lembaga.logo_url else '/static/images/logocolorful.svg' }}"
+                                        alt="Logo Saat Ini"
+                                        class="w-32 h-auto mx-auto mb-4"
+                                    />
+                                </div>
+                                <div>
+                                    <label
+                                        for="logo_file"
+                                        class="block font-medium text-lg"
+                                        >Pilih Logo Baru (Opsional)</label
+                                    >
+                                    <input
+                                        type="file"
+                                        id="logo_file"
+                                        name="logo_file"
+                                        accept="image/*"
+                                        class="w-full p-3 border border-gray-300 rounded-md"
+                                    />
+                                </div>
+                                <div>
+                                    <label
+                                        for="nama"
+                                        class="block font-medium text-lg"
+                                        >Nama Lembaga</label
+                                    >
+                                    <input
+                                        type="text"
+                                        id="nama"
+                                        name="nama"
+                                        value="{{ lembaga.nama }}"
+                                        class="w-full p-3 border border-gray-300 rounded-md"
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <!-- Info Detail Lembaga -->
+                            <div class="space-y-4">
+                                <div>
+                                    <label
+                                        for="nama_lengkap"
+                                        class="block font-medium text-lg"
+                                        >Nama Lengkap</label
+                                    >
+                                    <input
+                                        type="text"
+                                        id="nama_lengkap"
+                                        name="nama_lengkap"
+                                        value="{{ detail_lembaga.nama_lengkap }}"
+                                        class="w-full p-3 border border-gray-300 rounded-md"
+                                    />
+                                </div>
+                                <div>
+                                    <label
+                                        for="alamat_kantor"
+                                        class="block font-medium text-lg"
+                                        >Alamat Kantor</label
+                                    >
+                                    <input
+                                        type="text"
+                                        id="alamat_kantor"
+                                        name="alamat_kantor"
+                                        value="{{ detail_lembaga.alamat_kantor }}"
+                                        class="w-full p-3 border border-gray-300 rounded-md"
+                                    />
+                                </div>
+                                <div>
+                                    <label
+                                        for="telepon"
+                                        class="block font-medium text-lg"
+                                        >Telepon</label
+                                    >
+                                    <input
+                                        type="text"
+                                        id="telepon"
+                                        name="telepon"
+                                        value="{{ detail_lembaga.telepon }}"
+                                        class="w-full p-3 border border-gray-300 rounded-md"
+                                    />
+                                </div>
+                                <div>
+                                    <label
+                                        for="email"
+                                        class="block font-medium text-lg"
+                                        >Email</label
+                                    >
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        value="{{ detail_lembaga.email }}"
+                                        class="w-full p-3 border border-gray-300 rounded-md"
+                                    />
+                                </div>
+                                <div>
+                                    <label
+                                        for="web_resmi"
+                                        class="block font-medium text-lg"
+                                        >Website Resmi</label
+                                    >
+                                    <input
+                                        type="url"
+                                        id="web_resmi"
+                                        name="web_resmi"
+                                        value="{{ detail_lembaga.web_resmi }}"
+                                        class="w-full p-3 border border-gray-300 rounded-md"
+                                    />
+                                </div>
+                                <div>
+                                    <label
+                                        for="deskripsi"
+                                        class="block font-medium text-lg"
+                                        >Deskripsi</label
+                                    >
+                                    <textarea
+                                        id="deskripsi"
+                                        name="deskripsi"
+                                        rows="4"
+                                        class="w-full p-3 border border-gray-300 rounded-md"
+                                    >
+{{ detail_lembaga.deskripsi }}</textarea
+                                    >
+                                </div>
+                                <div>
+                                    <label
+                                        for="informasi"
+                                        class="block font-medium text-lg"
+                                        >Informasi</label
+                                    >
+                                    <textarea
+                                        id="informasi"
+                                        name="informasi"
+                                        rows="4"
+                                        class="w-full p-3 border border-gray-300 rounded-md"
+                                    >
+{{ detail_lembaga.informasi }}</textarea
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 flex justify-end">
+                            <button
+                                type="submit"
+                                class="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition duration-200"
+                            >
+                                Simpan Perubahan
+                            </button>
+                            <a
+                                href="{{ url_for('data_lembaga') }}"
+                                class="bg-gray-300 text-black px-6 py-3 rounded-md hover:bg-gray-400 transition duration-200"
+                            >
+                                Batal
+                            </a>
+                        </div>
+                    </form>
+                </section>
+            </main>
+        </div>
+    </body>
+</html>

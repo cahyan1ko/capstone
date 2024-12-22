@@ -172,6 +172,61 @@
                 </h1>
             </div>
         </section>
+        <section
+            class="py-[5rem] justify-center text-center px-40 bg-gradient-to-b from-gray-200 to-white font-poppins"
+        >
+            <h1 class="text-black font-bold text-2xl mb-4">
+                Komentar Pengguna
+            </h1>
+
+            <div class="mt-10">
+                <div class="mt-4 space-y-6">
+                    {% for ulasan_data in ulasan_data %}
+                    <div
+                        class="bg-white p-4 rounded-md border border-gray-300 shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out"
+                    >
+                        <div class="flex justify-between items-start">
+                            <p class="text-base text-gray-700 flex-1">
+                                {{ ulasan_data.ulasan }}
+                            </p>
+                            <p class="text-sm text-gray-500 ml-4">
+                                {{ ulasan_data.created_at.strftime('%d %b %Y,
+                                %H:%M') }}
+                            </p>
+                        </div>
+                    </div>
+                    {% else %}
+                    <p class="text-gray-500 text-center">Belum ada ulasan.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <form
+                action="{{ url_for('add_ulasan') }}"
+                method="POST"
+                class="w-full max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md"
+            >
+                <label
+                    for="ulasan"
+                    class="block mt-4 text-sm font-semibold text-gray-700"
+                    >Komentar</label
+                >
+                <textarea
+                    id="ulasan"
+                    name="ulasan"
+                    required
+                    rows="4"
+                    class="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600"
+                    placeholder="Tulis komentar Anda"
+                ></textarea>
+                <button
+                    type="submit"
+                    class="w-full mt-6 py-2 bg-black text-white font-semibold rounded-full hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600"
+                >
+                    Kirim Komentar
+                </button>
+            </form>
+        </section>
 
         {% include 'partials/footer.html' %}
 
@@ -202,8 +257,33 @@
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
+            window.onload = function() {
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            if (category == "success") {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil!',
+                                    text: '{{ message }}',
+                                    confirmButtonText: 'OK'
+                                });
+                            } else if (category == "error") {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal!',
+                                    text: '{{ message }}',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            }
+
+
             const tahun = {{ tahun | tojson }};
             const presentase_penduduk_miskin = {{ presentase_penduduk_miskin | tojson }};
 
@@ -242,8 +322,6 @@
                     }
                 }
             });
-
-
 
             const bubbleIcon = document.getElementById("bubble-icon")
             const chatRoom = document.getElementById("chat-room")

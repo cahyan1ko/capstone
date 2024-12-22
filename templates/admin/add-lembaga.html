@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Item | Poverty Lens</title>
+    <link rel="icon" type="image/x-icon" href="/static/images/onlylogo-colorful.svg" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 font-poppins min-h-screen">
+    <div class="flex justify-center items-center w-full h-screen">
+        <div class="flex w-full h-full bg-[#D6C0B3] p-8 rounded-lg shadow-xl">
+            <div class="w-1/2 h-full bg-cover bg-center" style="background-image: url(/static/images/onlylogo-black.svg);">
+            </div>            
+            <div class="w-1/2 h-full p-8 overflow-auto">
+                <h2 class="text-3xl font-semibold text-center text-white mb-8">Add New Lembaga</h2>
+
+                <form action="/add-item" method="POST" enctype="multipart/form-data">
+                    <div class="mb-6">
+                        <label for="logo" class="block text-lg font-medium text-white mb-2">Logo</label>
+                        <input type="file" id="logo" name="logo" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="nama_lembaga" class="block text-lg font-medium text-white mb-2">Nama Lembaga</label>
+                        <input type="text" id="nama_lembaga" name="nama_lembaga" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="deskripsi" class="block text-lg font-medium text-white mb-2">Deskripsi</label>
+                        <textarea id="deskripsi" name="deskripsi" rows="4" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300" required></textarea>
+                    </div>
+                    <div class="mb-6">
+                        <label for="jenis_bantuan" class="block text-lg font-medium text-white mb-2">Jenis Bantuan</label>
+                        <input type="text" id="jenis_bantuan" name="jenis_bantuan" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="alamat" class="block text-lg font-medium text-white mb-2">Alamat</label>
+                        <textarea id="alamat" name="alamat" rows="3" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300" required></textarea>
+                    </div>
+                    <div class="mb-6">
+                        <label for="no_telp" class="block text-lg font-medium text-white mb-2">No. Telp</label>
+                        <input type="tel" id="no_telp" name="no_telp" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300" required>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-6">
+                        <label for="email" class="block text-lg font-medium text-white mb-2">Email</label>
+                        <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300" required>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="flex justify-between">
+                        <!-- Back Button -->
+                        <a href="javascript:history.back()" class="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all duration-300">
+                            Back
+                        </a>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
