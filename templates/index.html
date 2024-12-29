@@ -30,7 +30,7 @@
                     Map Of Poor Areas with
                 </h1>
                 <h1
-                    class="text-red-600 font-bold text-5xl md:text-3xl lg:text-4xl"
+                    class="text-red-600 font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
                 >
                     PovertyLens
                 </h1>
@@ -71,7 +71,6 @@
                 Kota Tegal
             </h1>
             <div class="px-8 py-4">
-                <!-- Padding ditambahkan di sini -->
                 <canvas
                     class="chart-kemiskinan"
                     id="kemiskinanChart"
@@ -81,59 +80,84 @@
         </section>
 
         <section
-            class="py-[15rem] justify-center text-left px-40 bg-gradient-to-b from-gray-200 to-white font-poppins"
+            class="py-[8rem] px-10 sm:px-20 md:px-40 bg-gradient-to-b from-gray-200 to-white font-poppins flex flex-col md:flex-row items-center"
         >
-            <img src="/static/images/logofixblack.svg" alt="" class="pb-5" />
-            <h1 class="text-black">
-                Sebuah inisiatif pemetaan kemiskinan berbasis teknologi yang
-                dirancang untuk menganalisis, memetakan, dan mengatasi berbagai
-                tantangan ekonomi yang dihadapi oleh masyarakat kurang mampu.
-                Dengan memanfaatkan data terkini, alat analitik yang canggih,
-                serta teknologi pemetaan visual, Poverty Lens memberikan
-                gambaran yang jelas dan mendalam mengenai kondisi kemiskinan di
-                berbagai wilayah. Melalui pendekatan ini, program ini bertujuan
-                untuk memberikan wawasan yang lebih baik kepada para pembuat
-                kebijakan, organisasi non-pemerintah, serta pemangku kepentingan
-                lainnya, dalam upaya merancang strategi intervensi yang lebih
-                efektif dan tepat sasaran. Tujuan akhirnya adalah mewujudkan
-                kehidupan yang lebih sejahtera dan berkeadilan bagi seluruh
-                lapisan masyarakat, tanpa terkecuali.
-            </h1>
+            <!-- Gambar di sebelah kiri (untuk perangkat kecil, tampil di atas teks) -->
+            <div class="w-full md:w-1/2 pr-0 md:pr-10 mb-10 md:mb-0">
+                <img
+                    src="/static/images/slum-area.jpg"
+                    alt="About Us"
+                    class="w-full h-auto rounded-lg shadow-lg"
+                />
+            </div>
+
+            <!-- Teks di sebelah kanan (untuk perangkat kecil, tampil di bawah gambar) -->
+            <div class="w-full md:w-1/2 pl-0 md:pl-10 text-left">
+                <h1 class="text-black text-4xl font-bold mb-5">Tentang Kami</h1>
+                <p class="text-gray-700 text-lg mb-5">
+                    Poverty Lens adalah inisiatif pemetaan kemiskinan berbasis
+                    teknologi yang bertujuan menganalisis dan mengatasi
+                    tantangan ekonomi masyarakat kurang mampu. Dengan
+                    menggunakan data terkini dan alat analitik canggih, kami
+                    memberikan wawasan yang jelas mengenai kondisi kemiskinan di
+                    berbagai wilayah untuk membantu merancang strategi
+                    intervensi yang lebih efektif dan tepat sasaran.
+                </p>
+
+                <div class="flex space-x-5">
+                    <a href="#" class="text-gray-700 hover:text-black">
+                        <i class="fab fa-facebook-f text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-black">
+                        <i class="fab fa-twitter text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-black">
+                        <i class="fab fa-instagram text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-black">
+                        <i class="fab fa-linkedin-in text-2xl"></i>
+                    </a>
+                </div>
+            </div>
         </section>
 
         <section
-            class="py-[8rem] justify-center text-center px-40 bg-gradient-to-b from-gray-200 to-white font-poppins"
+            class="py-[8rem] px-10 sm:px-20 md:px-40 bg-gradient-to-b from-gray-200 to-white font-poppins"
         >
-            <h1 class="text-black font-bold text-2xl">
-                Bagaimana sih Fitur AI
-            </h1>
-            <h1 class="text-red-400 font-bold text-2xl">PovertyLens</h1>
+            <div
+                class="flex flex-col md:flex-row justify-center items-center space-y-10 md:space-y-0 md:space-x-10"
+            >
+                <!-- Kalimat penjelasan di sebelah kiri -->
+                <div class="w-full md:w-1/2 text-left">
+                    <h1 class="text-black font-bold text-2xl">
+                        Sistematis Fitur Pindai Wilayah
+                    </h1>
+                    <p class="text-black pt-4">
+                        Fitur pindai wilayah di PovertyLens memberikan cara yang
+                        efisien untuk menganalisis dan menentukan prioritas
+                        bantuan di suatu wilayah berdasarkan data spasial yang
+                        diambil dari peta interaktif. Berikut adalah
+                        langkah-langkah sistematis dalam menggunakan fitur ini:
+                    </p>
 
-            <h1 class="text-black pt-4">
-                Fitur utama dari Poverty Lens adalah kemampuan untuk mengunggah
-                gambar tangkapan layar (screenshot) peta atau maps yang disertai
-                dengan teks pertanyaan dari pengguna. Fitur ini memanfaatkan
-                teknologi kecerdasan buatan (AI) untuk menganalisis peta atau
-                gambar yang diunggah dan menjawab pertanyaan yang diajukan.
-                Pengguna dapat mengirimkan peta yang menunjukkan wilayah
-                tertentu atau area spesifik yang mereka ingin pelajari lebih
-                lanjut, baik itu terkait tingkat kemiskinan, kondisi
-                infrastruktur, akses terhadap layanan publik, atau tantangan
-                ekonomi lainnya.
+                    <!-- Tombol Pelajari Selengkapnya -->
+                    <a
+                        href="/fitur-pindai-wilayah"
+                        class="inline-block mt-6 px-6 py-2 bg-red-400 text-white font-semibold rounded-full hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-600"
+                    >
+                        Pelajari Selengkapnya
+                    </a>
+                </div>
 
-                <br />
-                <br />
-
-                Setelah gambar dan pertanyaan diterima, AI dalam sistem Poverty
-                Lens akan mengolah data tersebut, memeriksa tren, pola, dan data
-                relevan lainnya untuk memberikan jawaban yang informatif dan
-                tepat sasaran. Dengan adanya fitur ini, Poverty Lens
-                memungkinkan pengguna untuk memperoleh pemahaman yang lebih
-                mendalam mengenai dinamika kemiskinan dan isu-isu terkait di
-                wilayah yang ditentukan, sehingga dapat membantu pengambilan
-                keputusan berbasis data untuk intervensi sosial dan kebijakan
-                yang lebih efektif.
-            </h1>
+                <!-- Gambar sistematis di sebelah kanan -->
+                <div class="w-full md:w-1/2">
+                    <img
+                        src="/static/images/flow.png"
+                        alt="Sistematis Fitur Pindai Wilayah"
+                        class="w-full h-auto rounded-lg shadow-2xl"
+                    />
+                </div>
+            </div>
         </section>
 
         <section
@@ -191,8 +215,8 @@
                     <div
                         class="bg-white p-4 rounded-md border border-gray-300 shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out"
                     >
-                        <div class="flex justify-between items-start">
-                            <p class="text-base text-gray-700 flex-1">
+                        <div class="flex justify-start items-start">
+                            <p class="text-base text-gray-700 flex-1 text-left">
                                 {{ ulasan_data.ulasan }}
                             </p>
                             <p class="text-sm text-gray-500 ml-4">
