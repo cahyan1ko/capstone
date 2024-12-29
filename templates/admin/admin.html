@@ -43,7 +43,7 @@
                 <div class="p-4 border-t border-white">
                     <a
                         href="{{ url_for('logout') }}"
-                        class="block py-2.5 px-4 hover:bg-blue-800 text-center"
+                        class="block py-2.5 px-4 bg-[#C1B111] hover:bg-blue-800 text-center"
                     >
                         Logout
                     </a>
@@ -135,7 +135,7 @@
                     labels: ['Positif', 'Negatif'],
                     datasets: [{
                         data: [{{ positif_count }}, {{ negatif_count }}],
-                        backgroundColor: ['#DEAA79', '#659287'],
+                        backgroundColor: [ '#50c878', '#b22222'],
                     }]
                 },
                 options: {

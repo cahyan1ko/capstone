@@ -20,6 +20,7 @@ import numpy as np
 from flask_migrate import Migrate
 
 app = Flask(__name__)
+
 CORS(app)
 WIB = pytz.timezone('Asia/Jakarta')
 
@@ -30,7 +31,9 @@ app.config["SQLALCHEMY_DATABASE_URI"] = (
 
 app.config["SQLALCHEMY_DATABASE_URI"] += "?ssl_ca=C:/tidb_ca/isrgrootx1.pem"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config['DEBUG'] = True
 app.secret_key = 'povertylens'
+
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -403,7 +406,6 @@ def admin():
     ulasan_positif = db.session.query(Ulasan).filter(Ulasan.label == 'positif').order_by(Ulasan.created_at.desc()).all()
     ulasan_negatif = db.session.query(Ulasan).filter(Ulasan.label == 'negatif').order_by(Ulasan.created_at.desc()).all()
 
-    # Menghitung jumlah ulasan positif dan negatif
     positif_count = len(ulasan_positif)
     negatif_count = len(ulasan_negatif)
     return render_template("admin/admin.html",
@@ -419,10 +421,38 @@ def data_lembaga():
     lembagas = Lembaga.query.options(joinedload(Lembaga.detail)).all()
     return render_template("admin/data-lembaga.html", lembagas=lembagas)
 
-@app.route("/qH4BcxHm8")
+@app.route("/qH4BcxHm8", methods =['GET', 'POST'])
 def add_lembaga():
-    if 'logged_in' not in session or not session['logged_in']:
-        return redirect(url_for('login'))
+    if request.method == 'POST':
+        nama = request.form.get('nama')
+        logo_url = request.form.get('logo_url')
+        alamat_kantor = request.form.get('alamat_kantor')
+        telepon = request.form.get('telepon')
+        email = request.form.get('email')
+        web_resmi = request.form.get('web_resmi')
+        deskripsi = request.form.get('deskripsi')
+        informasi = request.form.get('informasi')
+        nama_lengkap = request.form.get('nama_lengkap')
+
+        detail_lembaga = DetailLembaga(
+            alamat_kantor=alamat_kantor,
+            telepon=telepon,
+            email=email,
+            web_resmi=web_resmi,
+            deskripsi=deskripsi,
+            informasi=informasi,
+            nama_lengkap=nama_lengkap
+        )
+        lembaga = Lembaga(
+            nama=nama,
+            logo_url=logo_url,
+            detail=detail_lembaga
+        )
+
+        db.session.add(lembaga)
+        db.session.commit()
+        flash('Data lembaga berhasil ditambahkan!', 'success')
+        return redirect(url_for('data_lembaga'))
     return render_template("admin/add-lembaga.html")
 
 @app.route('/edit-lembaga/<int:id>', methods=['GET', 'POST'])
@@ -470,4 +500,4 @@ def delete_lembaga(id):
 ### RUN APP
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(port=5000, debug=True)

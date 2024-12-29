@@ -15,13 +15,10 @@
         />
         <link rel="stylesheet" href="/static/css/style.css" />
         <link
-            href="{{ url_for('static', filename='css/output.css') }}"
-            rel="stylesheet"
-        />
-        <link
             rel="stylesheet"
             href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         />
+        <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
         <script src="https://unpkg.com/leaflet-image@0.4.1/leaflet-image.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -33,6 +30,13 @@
                 border-radius: 8px;
                 margin-bottom: 20px;
             }
+
+            @media screen and (max-width: 768px) {
+                #mapid {
+                    height: 200px;
+                }
+            }
+
             body {
                 height: 4000px;
             }
@@ -41,7 +45,7 @@
     <body>
         {% include 'partials/navbar.html' %}
         <!-- Pindai Wilayah -->
-        <section class="p-6 bg-white top-0 px-20">
+        <section class="p-6 bg-white px-20 pt-20">
             <div class="flex gap-8 pt-5">
                 <div class="p-6 rounded-lg w-2/5 border border-black">
                     <div id="mapid" class=""></div>

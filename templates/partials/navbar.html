@@ -4,19 +4,120 @@
         top: 20px;
         left: 50%;
         transform: translateX(-50%);
-        z-index: 3000;
-        width: auto;
-        background-color: rgba(
-            244,
-            244,
-            244,
-            0.9
-        );
+        z-index: 2000;
+        background-color: rgba(244, 244, 244, 0.9);
         border-radius: 20px;
         padding: 10px 20px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        right: -250px;
+        width: 220px;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        transition: right 0.3s ease-in-out;
+        z-index: 3000;
+        padding-top: 20px;
+    }
+
+    .sidebar a {
+        display: block;
+        color: white;
+        padding: 15px 25px;
+        text-decoration: none;
+        font-size: 18px;
+        transition: background-color 0.3s ease;
+    }
+
+    .sidebar a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .sidebar .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 30px;
+        color: white;
+        cursor: pointer;
+        z-index: 4000;
+    }
+
+    .sidebar .logo {
+        padding-top: 3px;
+        width: 90px;
+        margin-bottom: 20px;
+        display: block;
+        margin-left: 0;
+    }
+
+    .sidebar a {
+        padding-top: 10px;
+    }
+
+    .button-hamburger {
+        position: fixed;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        z-index: 4000;
+        cursor: pointer;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        z-index: 2500;
+    }
+
+    @media (max-width: 768px) {
+        .navbar {
+            width: 90%;
+            padding: 10px;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .md\:flex {
+            display: none;
+        }
+
+        .navbar .md\:hidden {
+            display: block;
+        }
+
+        .button-hamburger {
+            position: fixed;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            z-index: 4000;
+        }
+    }
 </style>
+
+<div id="overlay" class="overlay" onclick="closeSidebar()"></div>
+
+<div id="sidebar" class="sidebar">
+    <img src="/static/images/logocolorful.svg" alt="Logo" class="logo" />
+    <span class="close-btn" onclick="closeSidebar()">&times;</span>
+    <a href="{{ url_for('index') }}">Beranda</a>
+    <a href="{{ url_for('pindaiWilayah') }}">Pindai Wilayah</a>
+    <a href="{{ url_for('dtLembaga') }}">Daftar Lembaga</a>
+    <a href="{{ url_for('rekapData') }}">Rekap Data</a>
+</div>
 
 <nav
     class="navbar sticky top-4 md:w-4/5 md:px-10 bg-[#f4f4f4] py-2 px-5 rounded-3xl shadow-lg flex items-center justify-between md:justify-center space-x-4 font-poppins mx-auto z-10"
@@ -56,22 +157,51 @@
             >Rekap Data</a
         >
     </div>
-    <div class="md:hidden ml-4">
-        <button id="menu-toggle" class="focus:outline-none">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6 text-black"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-            >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M4 6h16M4 12h16m-7 6h7"
-                />
-            </svg>
-        </button>
+
+    <!-- Hamburger button should be visible on small screens -->
+    <div
+        class="md:hidden flex items-center button-hamburger"
+        onclick="openSidebar()"
+    >
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-black"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16m-7 6h7"
+            />
+        </svg>
     </div>
 </nav>
+
+<script>
+    function openSidebar() {
+        document.getElementById("sidebar").style.right = "0"
+        document.getElementById("overlay").style.opacity = "1"
+        document.getElementById("overlay").style.visibility = "visible"
+    }
+
+    function closeSidebar() {
+        document.getElementById("sidebar").style.right = "-250px"
+        document.getElementById("overlay").style.opacity = "0"
+        document.getElementById("overlay").style.visibility = "hidden"
+    }
+
+    document.addEventListener("click", function (e) {
+        const sidebar = document.getElementById("sidebar")
+        const overlay = document.getElementById("overlay")
+        if (
+            !sidebar.contains(e.target) &&
+            !document.querySelector(".button-hamburger").contains(e.target) &&
+            !overlay.contains(e.target)
+        ) {
+            closeSidebar()
+        }
+    })
+</script>
