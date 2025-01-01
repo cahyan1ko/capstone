@@ -27,235 +27,225 @@
     <body>
         {% include 'partials/navbar.html'%}
         <section class="p-6 bg-white px-20 pt-20">
-            <div class="px-44 pt-5">
+            <div class="px-20 pt-5">
                 <h1 class="font-bold text-2xl pt-6">Rekap Data</h1>
                 <h1 class="">Terakhir Diperbarui : 25 Januari 2024</h1>
 
                 <div class="flex justify-between mt-4">
-                    <div
-                        class="h-10 w-36 border-gray-600 border justify-center rounded-lg py-2 flex"
+                    <button
+                        id="dropdownButton"
+                        class="focus:outline-none text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-600 flex items-center"
+                        type="button"
                     >
-                        <h1 class="font-bold mr-3">2021 - 2023</h1>
-                        <img
-                            src="{{ url_for('static', filename='images/arrowtri.svg') }}"
-                            class="h-3 mt-1.5"
-                            alt="Arrow"
-                        />
-                    </div>
+                        <span id="dropdownText">{{ selected_range }}</span>
+                        <svg
+                            class="w-2.5 h-2.5 ms-3"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 10 6"
+                        >
+                            <path
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="m1 1 4 4 4-4"
+                            />
+                        </svg>
+                    </button>
 
                     <div
-                        class="h-10 w-36 bg-[#F44336] bg-opacity-35 justify-center rounded-lg py-2 flex"
-                        style="background-color: #f44336; color: white"
+                        id="dropdownMenu"
+                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-auto dark:bg-gray-700 absolute mt-12"
                     >
-                        <h1 class="font-bold mr-3 text-white">Download</h1>
+                        <ul
+                            class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                        >
+                            <li>
+                                <a
+                                    href="#"
+                                    class="block px-4 py-2 text-center"
+                                    data-value="2021-2023"
+                                    >2021-2023</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    class="block px-4 py-2 text-center"
+                                    data-value="2018-2020"
+                                    >2018-2020</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    class="block px-4 py-2 text-center"
+                                    data-value="2015-2017"
+                                    >2015-2017</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    class="block px-4 py-2 text-center"
+                                    data-value="2011-2013"
+                                    >2011-2013</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    class="block px-4 py-2 text-center"
+                                    data-value="2008-2010"
+                                    >2008-2010</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    class="block px-4 py-2 text-center"
+                                    data-value="2005-2007"
+                                    >2005-2007</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    class="block px-4 py-2 text-center"
+                                    data-value="2002-2004"
+                                    >2002-2004</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button
+                        id="downloadButton"
+                        type="button"
+                        class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 flex items-center"
+                    >
+                        <span>Unduh Data</span>
                         <img
                             src="{{ url_for('static', filename='images/download.svg') }}"
-                            class="h-5 mt-0.5"
+                            class="h-5 ml-2"
                             alt="Download"
                         />
-                    </div>
+                    </button>
                 </div>
 
-                <div class="container mx-auto p-4">
+                <h1 class="mt-4 text-2xl">
+                    Kemiskinan,
+                    <span id="selectedYearRange">{{ selected_range }}</span>
+                </h1>
+
+                <div class="container mx-auto p-2 mt-2">
                     <div
-                        class="overflow-x-auto mt-5 border border-black rounded-xl"
+                        class="overflow-x-auto mt-5 border border-gray-300 rounded-xl bg-white shadow-lg"
                     >
                         <table
-                            class="w-full bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden"
+                            id="dataTable"
+                            class="w-full text-sm text-left text-gray-800"
                         >
-                            <thead>
+                            <thead
+                                class="text-xs text-gray-900 uppercase bg-[#FF9800] text-white"
+                            >
                                 <tr>
-                                    <th
-                                        rowspan="3"
-                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center align-middle rounded-tl-lg"
-                                    >
-                                        Wilayah Inflasi
+                                    <th class="px-6 py-3 border-b">Tahun</th>
+                                    <th class="px-6 py-3 border-b">
+                                        Garis Kemiskinan
                                     </th>
-                                    <th
-                                        colspan="9"
-                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center rounded-tr-lg"
-                                    >
-                                        Kemiskinan
+                                    <th class="px-6 py-3 border-b">
+                                        Jumlah Penduduk Miskin
                                     </th>
-                                </tr>
-                                <tr>
-                                    <th
-                                        colspan="3"
-                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
-                                    >
-                                        Garis Kemiskinan (Rp/Kapita/Bulan)
+                                    <th class="px-6 py-3 border-b">
+                                        Persentase Penduduk Miskin
                                     </th>
-                                    <th
-                                        colspan="3"
-                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
-                                    >
-                                        Jumlah Penduduk Miskin (Ribu Orang)
+                                    <th class="px-6 py-3 border-b">
+                                        Indeks Kedalaman Kemiskinan
                                     </th>
-                                    <th
-                                        colspan="3"
-                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
-                                    >
-                                        Persentase Penduduk Miskin (RpO)
+                                    <th class="px-6 py-3 border-b">
+                                        Indeks Keparahan Kemiskinan
                                     </th>
-                                </tr>
-                                <tr>
-                                    <th
-                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
-                                    >
-                                        2021
-                                    </th>
-                                    <th
-                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
-                                    >
-                                        2022
-                                    </th>
-                                    <th
-                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
-                                    >
-                                        2023
-                                    </th>
-                                    <th
-                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
-                                    >
-                                        2021
-                                    </th>
-                                    <th
-                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
-                                    >
-                                        2022
-                                    </th>
-                                    <th
-                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
-                                    >
-                                        2023
-                                    </th>
-                                    <th
-                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
-                                    >
-                                        2021
-                                    </th>
-                                    <th
-                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center"
-                                    >
-                                        2022
-                                    </th>
-                                    <th
-                                        class="px-6 py-4 border border-gray-300 bg-gray-100 text-gray-800 font-semibold text-center rounded-br-lg"
-                                    >
-                                        2023
+                                    <th class="px-6 py-3 border-b">
+                                        Gini Rasio
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td
-                                        class="px-6 py-4 border border-gray-300 text-center font-semibold"
-                                    >
-                                        Kota Tegal
-                                    </td>
-                                    <td
-                                        class="px-6 py-4 border border-gray-300 text-center"
-                                    >
-                                        523.413.000
-                                    </td>
-                                    <td
-                                        class="px-6 py-4 border border-gray-300 text-center"
-                                    >
-                                        565.826.000
-                                    </td>
-                                    <td
-                                        class="px-6 py-4 border border-gray-300 text-center"
-                                    >
-                                        623.617.000
-                                    </td>
-                                    <td
-                                        class="px-6 py-4 border border-gray-300 text-center"
-                                    >
-                                        20,270
-                                    </td>
-                                    <td
-                                        class="px-6 py-4 border border-gray-300 text-center"
-                                    >
-                                        19,780
-                                    </td>
-                                    <td
-                                        class="px-6 py-4 border border-gray-300 text-center"
-                                    >
-                                        19,220
-                                    </td>
-                                    <td
-                                        class="px-6 py-4 border border-gray-300 text-center"
-                                    >
-                                        8,120
-                                    </td>
-                                    <td
-                                        class="px-6 py-4 border border-gray-300 text-center"
-                                    >
-                                        7,910
-                                    </td>
-                                    <td
-                                        class="px-6 py-4 border border-gray-300 text-center"
-                                    >
-                                        7,680
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td
-                                        class="px-6 py-4 border border-gray-300 text-center font-semibold"
-                                    >
-                                        Jawa Tengah
-                                    </td>
-                                    <td
-                                        class="px-6 py-4 border border-gray-300 text-center"
-                                    >
-                                        409.193.000
-                                    </td>
-                                    <td
-                                        class="px-6 py-4 border border-gray-300 text-center"
-                                    >
-                                        438.833.000
-                                    </td>
-                                    <td
-                                        class="px-6 py-4 border border-gray-300 text-center"
-                                    >
-                                        477.580.000
-                                    </td>
-                                    <td
-                                        class="px-6 py-4 border border-gray-300 text-center"
-                                    >
-                                        4.109.750
-                                    </td>
-                                    <td
-                                        class="px-6 py-4 border border-gray-300 text-center"
-                                    >
-                                        3.831.440
-                                    </td>
-                                    <td
-                                        class="px-6 py-4 border border-gray-300 text-center"
-                                    >
-                                        3.791.500
-                                    </td>
-                                    <td
-                                        class="px-6 py-4 border border-gray-300 text-center"
-                                    >
-                                        11,790
-                                    </td>
-                                    <td
-                                        class="px-6 py-4 border border-gray-300 text-center"
-                                    >
-                                        10,930
-                                    </td>
-                                    <td
-                                        class="px-6 py-4 border border-gray-300 text-center"
-                                    >
-                                        10,770
-                                    </td>
-                                </tr>
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </section>
+        <script>
+            document
+                .getElementById("dropdownButton")
+                .addEventListener("click", function () {
+                    dropdownMenu.classList.toggle("hidden")
+                })
+
+            const menuItems = dropdownMenu.querySelectorAll("a")
+            menuItems.forEach((item) => {
+                item.addEventListener("click", function () {
+                    dropdownText.textContent = item.getAttribute("data-value")
+                    dropdownMenu.classList.add("hidden")
+
+                    const selectedRange = item.getAttribute("data-value")
+
+                    document.getElementById("selectedYearRange").textContent =
+                        selectedRange
+                    dropdownMenu.classList.add("hidden")
+                    updateTableData(selectedRange)
+                })
+            })
+
+            function updateTableData(selectedRange) {
+                fetch(`/rekap-data-ajax?tahun=${selectedRange}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        const tableBody =
+                            document.querySelector("#dataTable tbody")
+                        tableBody.innerHTML = ""
+
+                        if (data.length > 0) {
+                            data.forEach((row) => {
+                                const rowElement = document.createElement("tr")
+                                rowElement.innerHTML = `
+                        <td class="px-6 py-4 border border-gray-300 text-center">${row.tahun}</td>
+                        <td class="px-6 py-4 border border-gray-300 text-center">${row.garis_kemiskinan}</td>
+                        <td class="px-6 py-4 border border-gray-300 text-center">${row.jumlah_penduduk_miskin}</td>
+                        <td class="px-6 py-4 border border-gray-300 text-center">${row.presentase_penduduk_miskin}</td>
+                        <td class="px-6 py-4 border border-gray-300 text-center">${row.indeks_kedalaman_kemiskinan}</td>
+                        <td class="px-6 py-4 border border-gray-300 text-center">${row.indeks_keparahan_kemiskinan}</td>
+                        <td class="px-6 py-4 border border-gray-300 text-center">${row.gini_rasio}</td>
+                    `
+                                tableBody.appendChild(rowElement)
+                            })
+                        } else {
+                            tableBody.innerHTML =
+                                '<tr><td colspan="7" class="px-6 py-4 text-center">No data available for this selection.</td></tr>'
+                        }
+                    })
+                    .catch((error) =>
+                        console.error("Error fetching data:", error),
+                    )
+            }
+
+            updateTableData("2021-2023")
+
+            document
+                .getElementById("downloadButton")
+                .addEventListener("click", function () {
+                    const selectedRange = dropdownText.textContent.trim()
+                    downloadCSV(selectedRange)
+                })
+
+            function downloadCSV(selectedRange) {
+                const url = `/download-csv?tahun=${selectedRange}`
+                window.location.href = url
+            }
+        </script>
     </body>
 </html>

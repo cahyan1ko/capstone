@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for, flash
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for, flash, make_response, send_from_directory
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 import joblib
@@ -16,6 +16,7 @@ from PIL import Image
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 import numpy as np
+import os
 
 from flask_migrate import Migrate
 
@@ -23,6 +24,7 @@ app = Flask(__name__)
 
 CORS(app)
 WIB = pytz.timezone('Asia/Jakarta')
+CSV_FOLDER = os.path.join(app.root_path, 'static', 'csv')
 
 # app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://A3CP:S.Tr.Kom2024@194.31.53.102/A3CP"
 app.config["SQLALCHEMY_DATABASE_URI"] = (
@@ -32,6 +34,12 @@ app.config["SQLALCHEMY_DATABASE_URI"] = (
 app.config["SQLALCHEMY_DATABASE_URI"] += "?ssl_ca=C:/tidb_ca/isrgrootx1.pem"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config['DEBUG'] = True
+app.config.update(
+    SECRET_KEY='povertylens',
+    SESSION_COOKIE_NAME='session',  # Nama cookie sesi
+    SESSION_COOKIE_HTTPONLY=True,   # Pastikan cookie tidak bisa diakses melalui JavaScript
+    SESSION_COOKIE_SECURE=False     # Jika aplikasi Anda tidak menggunakan HTTPS, set False
+)
 app.secret_key = 'povertylens'
 
 
@@ -295,9 +303,43 @@ def detailLembaga(lembaga_id):
     except Exception as e:
         return str(e)
 
-@app.route("/rekap-data")
+@app.route("/rekap-data", methods=["GET"])
 def rekapData():
-    return render_template("rekap-data.html")
+    selected_range = request.args.get("tahun", "2021-2023")
+    start_year, end_year = map(int, selected_range.split('-'))
+    data = Kemiskinan.query.filter(Kemiskinan.tahun >= start_year, Kemiskinan.tahun <= end_year).all()
+    return render_template("rekap-data.html", data=data, selected_range=selected_range)
+
+
+@app.route("/rekap-data-ajax", methods=["GET"])
+def rekap_data_ajax():
+    selected_range = request.args.get("tahun", "2021-2023")
+    start_year, end_year = map(int, selected_range.split('-'))
+    data = Kemiskinan.query.filter(Kemiskinan.tahun >= start_year, Kemiskinan.tahun <= end_year).all()
+    result = [
+        {
+            "tahun": row.tahun,
+            "garis_kemiskinan": row.garis_kemiskinan,
+            "jumlah_penduduk_miskin": row.jumlah_penduduk_miskin,
+            "presentase_penduduk_miskin": row.presentase_penduduk_miskin,
+            "indeks_kedalaman_kemiskinan": row.indeks_kedalaman_kemiskinan,
+            "indeks_keparahan_kemiskinan": row.indeks_keparahan_kemiskinan,
+            "gini_rasio": row.gini_rasio
+        }
+        for row in data
+    ]
+    return jsonify(result)
+
+@app.route("/download-csv", methods=["GET"])
+def download_csv():
+    selected_range = request.args.get("tahun", "2021-2023")
+    file_name = f"Kemiskinan, {selected_range}.csv"
+    file_path = os.path.join(CSV_FOLDER, file_name)
+    if os.path.exists(file_path):
+        return send_from_directory(CSV_FOLDER, file_name, as_attachment=True)
+    else:
+        return "File tidak ditemukan", 404
+
 
 ### API ENDPOINTS
 ### API ENDPOINTS
@@ -395,8 +437,23 @@ def login():
 
 @app.route("/logout")
 def logout():
-    session.pop('logged_in', None)
-    return redirect(url_for('login'))
+    # Hapus sesi pengguna
+    session.pop('logged_in', None)  # Hapus 'logged_in' dari sesi
+    session.clear()  # Hapus seluruh data sesi
+
+    # Buat response redirect ke halaman login
+    response = redirect(url_for('login'))
+
+    # Hapus cookie sesi jika ada
+    response.delete_cookie('session')  # Menghapus cookie sesi jika diset sebelumnya
+
+    # Menambahkan header untuk mencegah cache pada browser
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+
+    return response
+
 
 @app.route("/IRyTFqXOuY")
 def admin():

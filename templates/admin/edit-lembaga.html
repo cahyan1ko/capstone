@@ -29,24 +29,25 @@
                 >
                     <img src="/static/images/logocolorful.svg" alt="" />
                 </div>
-                <nav class="flex-grow overflow-auto mt-3">
+                <nav class="flex-grow overflow-auto mt-3 space-y-1">
                     <a
                         href="{{ url_for('admin') }}"
-                        class="block py-2.5 px-4 mx-3 hover:bg-[#D7D3BF] hover:rounded-xl"
+                        class="block py-2.5 px-4 mx-3 {% if request.endpoint == 'admin' %}bg-[#d6d1c0] rounded-xl{% endif %} hover:bg-[#d6d1c0] hover:rounded-xl"
                         >Dashboard</a
                     >
                     <a
                         href="{{ url_for('data_lembaga') }}"
-                        class="block py-2.5 px-4 mx-3 hover:bg-[#D7D3BF] hover:rounded-xl"
+                        class="block py-2.5 px-4 mx-3 {% if request.endpoint in ['data_lembaga', 'edit_lembaga'] %}bg-[#d6d1c0] rounded-xl{% endif %} hover:bg-[#d6d1c0] hover:rounded-xl"
                         >Data Lembaga</a
                     >
                 </nav>
                 <div class="p-4 border-t border-white">
                     <a
                         href="{{ url_for('logout') }}"
-                        class="block py-2.5 px-4 hover:bg-blue-800 text-center"
-                        >Logout</a
+                        class="block py-2.5 px-4 bg-[#7c7868] hover:bg-[#9e9884] text-center text-white hover:text-black rounded-lg shadow-lg"
                     >
+                        Logout
+                    </a>
                 </div>
             </aside>
 
