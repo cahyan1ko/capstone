@@ -19,12 +19,11 @@
     <body>
         {% include 'partials/navbar.html' %}
 
-        <!-- Landing Page -->
         <section
-            class="w-full h-full justify-center text-center flex bg-gradient-to-b from-gray-400 to-white absolute top-0"
+            class="w-full h-full flex justify-center items-center bg-gradient-to-b from-gray-400 to-white absolute top-0"
         >
             <div
-                class="relative w-[40rem] font-poppins group py-[13rem] flex flex-col items-center"
+                class="relative w-[40rem] font-poppins group flex flex-col items-center py-20"
             >
                 <h1 class="text-black font-bold text-5xl">
                     Map Of Poor Areas with
@@ -62,70 +61,84 @@
         ></section>
 
         <section
-            class="justify-center text-left px-40 bg-gradient-to-b from-gray-200 to-white font-poppins"
+            class="flex justify-center items-center text-left px-40 bg-gradient-to-b from-gray-200 to-white font-poppins h-screen"
         >
-            <h1 class="text-center text-black font-bold text-2xl pt-4">
-                Persentase Penduduk Miskin
-            </h1>
-            <h1 class="text-center text-red-400 font-bold text-2xl">
-                Kota Tegal
-            </h1>
-            <div class="px-8 py-4">
-                <canvas
-                    class="chart-kemiskinan"
-                    id="kemiskinanChart"
-                    width="100%"
-                ></canvas>
-            </div>
-        </section>
-
-        <section
-            class="py-[8rem] px-10 sm:px-20 md:px-40 bg-gradient-to-b from-gray-200 to-white font-poppins flex flex-col md:flex-row items-center"
-        >
-            <div class="w-full md:w-1/2 pr-0 md:pr-10 mb-10 md:mb-0">
-                <img
-                    src="/static/images/slum-area.jpg"
-                    alt="About Us"
-                    class="w-full h-auto rounded-lg shadow-2xl"
-                />
-            </div>
-
-            <div class="w-full md:w-1/2 pl-0 md:pl-10 text-left">
-                <h1 class="text-black text-4xl font-bold mb-5">Tentang Kami</h1>
-                <p class="text-gray-700 text-lg mb-5">
-                    Poverty Lens adalah inisiatif pemetaan kemiskinan berbasis
-                    teknologi yang bertujuan menganalisis dan mengatasi
-                    tantangan ekonomi masyarakat kurang mampu. Dengan
-                    menggunakan data terkini dan alat analitik canggih, kami
-                    memberikan wawasan yang jelas mengenai kondisi kemiskinan di
-                    berbagai wilayah untuk membantu merancang strategi
-                    intervensi yang lebih efektif dan tepat sasaran.
-                </p>
-
-                <div class="flex space-x-5">
-                    <a href="#" class="text-gray-700 hover:text-black">
-                        <i class="fab fa-facebook-f text-2xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-700 hover:text-black">
-                        <i class="fab fa-twitter text-2xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-700 hover:text-black">
-                        <i class="fab fa-instagram text-2xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-700 hover:text-black">
-                        <i class="fab fa-linkedin-in text-2xl"></i>
-                    </a>
+            <div class="text-center">
+                <h1 class="text-black font-bold text-2xl pt-4">
+                    Persentase Penduduk Miskin
+                </h1>
+                <h1 class="text-red-400 font-bold text-2xl">Kota Tegal</h1>
+                <div class="px-8 py-4">
+                    <canvas
+                        class="chart-kemiskinan"
+                        id="kemiskinanChart"
+                        width="100%"
+                    ></canvas>
                 </div>
             </div>
         </section>
 
         <section
-            class="py-[8rem] px-10 sm:px-20 md:px-40 bg-gradient-to-b from-gray-200 to-white font-poppins"
+            class="py-[8rem] px-10 sm:px-20 md:px-40 bg-gradient-to-b from-gray-200 to-white font-poppins flex items-center justify-center"
+        >
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="w-full md:w-1/2 pr-0 md:pr-10 mb-10 md:mb-0">
+                    <img
+                        src="/static/images/slum-area.jpg"
+                        alt="About Us"
+                        class="w-full h-auto rounded-lg shadow-2xl"
+                    />
+                </div>
+
+                <div class="w-full md:w-1/2 pl-0 md:pl-10 text-left">
+                    <h1 class="text-black text-4xl font-bold mb-5">
+                        Tentang Kami
+                    </h1>
+                    <p class="text-gray-700 text-lg mb-5">
+                        Poverty Lens adalah inisiatif pemetaan kemiskinan
+                        berbasis teknologi yang bertujuan menganalisis dan
+                        mengatasi tantangan ekonomi masyarakat kurang mampu.
+                        Dengan menggunakan data terkini dan alat analitik
+                        canggih, kami memberikan wawasan yang jelas mengenai
+                        kondisi kemiskinan di berbagai wilayah untuk membantu
+                        merancang strategi intervensi yang lebih efektif dan
+                        tepat sasaran.
+                    </p>
+
+                    <div class="flex space-x-5">
+                        <a href="#" class="text-gray-700 hover:text-black">
+                            <i class="fab fa-facebook-f text-2xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-700 hover:text-black">
+                            <i class="fab fa-twitter text-2xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-700 hover:text-black">
+                            <i class="fab fa-instagram text-2xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-700 hover:text-black">
+                            <i class="fab fa-linkedin-in text-2xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section
+            class="py-[2rem] sm:py-[4rem] md:py-[8rem] px-10 sm:px-20 md:px-40 bg-gradient-to-b from-gray-200 to-white font-poppins flex items-center"
         >
             <div
-                class="flex flex-col md:flex-row justify-center items-center space-y-10 md:space-y-0 md:space-x-10"
+                class="flex flex-col md:flex-row justify-center items-center space-y-8 sm:space-y-10 md:space-y-0 md:space-x-10"
             >
-                <div class="w-full md:w-1/2 text-left">
+                <!-- Gambar di atas untuk responsive -->
+                <div class="w-full md:w-1/2 order-1 md:order-1">
+                    <img
+                        src="/static/images/flow.png"
+                        alt="Sistematis Fitur Pindai Wilayah"
+                        class="w-full h-auto rounded-lg shadow-2xl"
+                    />
+                </div>
+
+                <div class="w-full md:w-1/2 text-left order-2 md:order-2">
                     <h1 class="text-black font-bold text-2xl">
                         Sistematis Fitur Pindai Wilayah
                     </h1>
@@ -144,37 +157,26 @@
                         Coba sekarang!
                     </a>
                 </div>
-
-                <div class="w-full md:w-1/2">
-                    <img
-                        src="/static/images/flow.png"
-                        alt="Sistematis Fitur Pindai Wilayah"
-                        class="w-full h-auto rounded-lg shadow-2xl"
-                    />
-                </div>
             </div>
         </section>
 
         <section
-            class="py-[5rem] justify-center text-center px-40 bg-gradient-to-b from-gray-200 to-white font-poppins"
+            class="py-[5rem] justify-center text-center px-5 md:px-40 bg-gradient-to-b from-gray-200 to-white font-poppins"
         >
             <h1 class="text-black font-bold text-2xl mb-4">
                 Komentar Pengguna
             </h1>
 
-            <div class="mt-10">
+            <!-- <div class="mt-10">
                 <div class="mt-4 space-y-2">
                     {% for ulasan_data in ulasan_data %}
-                    <div
-                        class="bg-white p-4 rounded-md border border-gray-300 shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out"
-                    >
+                    <div class="bg-white p-4 rounded-md border border-gray-300 shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out">
                         <div class="flex justify-start items-start">
                             <p class="text-base text-gray-700 flex-1 text-left">
                                 {{ ulasan_data.ulasan }}
                             </p>
                             <p class="text-sm text-gray-500 ml-4">
-                                {{ ulasan_data.created_at.strftime('%d %b %Y,
-                                %H:%M') }}
+                                {{ ulasan_data.created_at.strftime('%d %b %Y, %H:%M') }}
                             </p>
                         </div>
                     </div>
@@ -182,7 +184,7 @@
                     <p class="text-gray-500 text-center">Belum ada ulasan.</p>
                     {% endfor %}
                 </div>
-            </div>
+            </div> -->
 
             <form
                 action="{{ url_for('add_ulasan') }}"

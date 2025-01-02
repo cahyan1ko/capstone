@@ -45,13 +45,13 @@
     <body>
         {% include 'partials/navbar.html' %}
         <!-- Pindai Wilayah -->
-        <section class="p-6 bg-white px-20 pt-20">
-            <div class="flex gap-8 pt-5">
-                <div class="p-6 rounded-lg w-2/5 border border-black">
+        <section class="p-6 bg-white px-6 px-4 sm:px-10 lg:px-20 pt-20">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-5">
+                <div class="p-6 rounded-lg border border-black">
                     <div id="mapid" class=""></div>
                     <div id="previewContainerMessage" class="mt-4"></div>
                     <div class="flex items-center mt-4 justify-between">
-                        <div class="flex items-center">
+                        <div class="flex items-center flex-col sm:flex-row">
                             <button
                                 id="captureButton"
                                 class="text-white px-4 py-2 rounded"
@@ -63,18 +63,8 @@
                             >
                                 Capture Map
                             </button>
-                            <span
-                                id="captureSuccess"
-                                class="ml-3 hidden font-bold"
-                                style="
-                                    color: #22c55e;
-                                    font-size: 14px;
-                                    font-weight: 500;
-                                "
-                            >
-                                ✔️ Tersimpan
-                            </span>
                         </div>
+
                         <div class="flex items-center gap-3">
                             <button
                                 id="previewCaptureButton"
@@ -101,6 +91,7 @@
                             </button>
                         </div>
                     </div>
+
                     <div id="previewContainer" class="mt-4"></div>
 
                     <div class="mb-4 relative">
@@ -184,8 +175,10 @@
                         Submit
                     </button>
                 </div>
+
                 <div
-                    class="rounded-lg border-gray-300 w-3/5 p-6 border border-black"
+                    id="answeringSection"
+                    class="rounded-lg border-gray-300 p-6 border border-black"
                 >
                     <h2 class="text-xl font-bold mb-4 text-center">
                         Answering
@@ -196,6 +189,7 @@
                 </div>
             </div>
         </section>
+
         <script>
             var map = L.map("mapid", {
                 zoomControl: false,
@@ -227,6 +221,9 @@
                     )
                     previewContainerMessage.innerHTML = ""
 
+                    captureButton.innerHTML =
+                        'Loading... <span class="spinner"></span>'
+
                     var center = map.getCenter()
                     var centerLat = center.lat
                     var centerLng = center.lng
@@ -239,19 +236,6 @@
                             `https://nominatim.openstreetmap.org/reverse?format=json&lat=${centerLat}&lon=${centerLng}`,
                         )
                         const data = await response.json()
-
-                        // const city =
-                        //     data.address.city ||
-                        //     data.address.town ||
-                        //     data.address.village ||
-                        //     "Tidak ditemukan"
-
-                        // if (city !== "Tegal") {
-                        //     alert(
-                        //         "Koordinat berada di luar Kota Tegal. Silakan pilih lokasi yang berada dalam Kota Tegal.",
-                        //     )
-                        //     return
-                        // }
 
                         const kelurahan =
                             data.address.suburb ||
@@ -277,9 +261,9 @@
                                 document.getElementById("previewContainer")
                             previewContainer.dataset.image = imgData
 
-                            var captureSuccess =
-                                document.getElementById("captureSuccess")
-                            captureSuccess.classList.remove("hidden")
+                            var captureButton =
+                                document.getElementById("captureButton")
+                            captureButton.textContent = "✔️Tersimpan"
 
                             console.log("Capture berhasil:", imgData)
                         })
@@ -385,6 +369,9 @@
 
                         resultContainer.appendChild(percentageList)
                     }
+                    const answeringSection =
+                        document.getElementById("answeringSection")
+                    answeringSection.scrollIntoView({ behavior: "smooth" })
                 }
         </script>
     </body>

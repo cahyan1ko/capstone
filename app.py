@@ -240,7 +240,7 @@ def process_image():
 @app.route('/')
 def index():
     try:
-        ulasan_results = Ulasan.query.order_by(Ulasan.created_at.desc()).limit(3).all()
+        ulasan_results = Ulasan.query.filter_by(label='positif').order_by(Ulasan.created_at.desc()).limit(3).all()
         
         ulasan_data = [{
             'ulasan': ulasan.ulasan,

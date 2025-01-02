@@ -26,15 +26,15 @@
 
     <body>
         {% include 'partials/navbar.html'%}
-        <section class="p-6 bg-white px-20 pt-20">
-            <div class="px-20 pt-5">
+        <section class="p-6 bg-white px-4 sm:px-10 lg:px-20 pt-20">
+            <div class="px-4 sm:px-10 lg:px-20 pt-5">
                 <h1 class="font-bold text-2xl pt-6">Rekap Data</h1>
-                <h1 class="">Terakhir Diperbarui : 25 Januari 2024</h1>
+                <h1>Terakhir Diperbarui : 25 Januari 2024</h1>
 
-                <div class="flex justify-between mt-4">
+                <div class="flex flex-wrap sm:flex-nowrap justify-between mt-4">
                     <button
                         id="dropdownButton"
-                        class="focus:outline-none text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-600 flex items-center"
+                        class="focus:outline-none text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-4 sm:mb-0 flex items-center"
                         type="button"
                     >
                         <span id="dropdownText">{{ selected_range }}</span>
@@ -55,9 +55,10 @@
                         </svg>
                     </button>
 
+                    <!-- Menu Dropdown -->
                     <div
                         id="dropdownMenu"
-                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-auto dark:bg-gray-700 absolute mt-12"
+                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-auto dark:bg-gray-700 absolute mt-12 sm:mt-0"
                     >
                         <ul
                             class="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -124,7 +125,7 @@
                     <button
                         id="downloadButton"
                         type="button"
-                        class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 flex items-center"
+                        class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-4 sm:mb-0 flex items-center"
                     >
                         <span>Unduh Data</span>
                         <img
