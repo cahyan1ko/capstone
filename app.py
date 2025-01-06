@@ -9,6 +9,7 @@ import pytz
 
 from sklearn.feature_extraction.text import CountVectorizer
 from datetime import datetime, timezone
+from sqlalchemy import func
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import joinedload
 from io import BytesIO
@@ -96,6 +97,17 @@ class Kemiskinan(db.Model):
     indeks_keparahan_kemiskinan = db.Column(db.String(50), nullable=True)
     gini_rasio = db.Column(db.String(50), nullable=True)
 
+class DataPopulasi(db.Model):
+    __tablename__ = 'data_populasi'
+    id = db.Column(db.Integer, primary_key=True)
+    kelurahan = db.Column(db.String(255), nullable=False)
+    populasi = db.Column(db.Integer, nullable=False)
+    luas_wilayah = db.Column(db.Float, nullable=False)
+
+    def __repr__(self):
+        return f"<DataPopulasi {self.kelurahan}, {self.populasi}, {self.luas_wilayah}>"
+
+
 def handle_none(value):
     """Mengganti nilai None atau undefined dengan nilai default."""
     if value is None or value == 'undefined':
@@ -176,14 +188,14 @@ categories = {
     "Perhutanan": [165, 197, 159],
 }
 overlay_colors = {
-    "Lahan Terbangun": [0, 255, 0],
-    "Lahan Kosong": [255, 255, 0],
-    "Jalan Arteri": [255, 105, 180],
-    "Rel Kereta": [255, 140, 0],
-    "Jalan Biasa": [128, 128, 128],
-    "Perairan": [0, 255, 255],
+    "Lahan Terbangun": [210, 180, 140],
+    "Lahan Kosong": [152, 251, 152],
+    "Jalan Arteri": [255, 160, 122],
+    "Rel Kereta": [210, 105, 30],
+    "Jalan Biasa": [192, 192, 192],
+    "Perairan": [176, 224, 230],
     "Lapangan": [144, 238, 144],
-    "Perhutanan": [34, 139, 34],
+    "Perhutanan": [85, 107, 47]
 }
 tolerance = 60
 
@@ -286,6 +298,18 @@ def add_ulasan():
 @app.route("/pindai-wilayah")
 def pindaiWilayah():
     return render_template("pindai-wilayah.html")
+
+@app.route("/get_populasi", methods=["GET"])
+def get_populasi():
+    kelurahan_name = request.args.get("kelurahan").lower()
+
+    data_kelurahan = DataPopulasi.query.filter(func.lower(DataPopulasi.kelurahan) == kelurahan_name).first()
+
+    if not data_kelurahan:
+        return jsonify({"error": "Kelurahan tidak ditemukan"}), 404
+
+    populasi = data_kelurahan.populasi
+    return jsonify({"kelurahan": kelurahan_name, "populasi": populasi})
 
 @app.route("/daftar-lembaga")
 def dtLembaga():

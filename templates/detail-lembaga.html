@@ -18,16 +18,17 @@
             href="{{ url_for('static', filename='css/output.css') }}"
             rel="stylesheet"
         />
+        <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body>
+    <body class="bg-gray-100 font-poppins">
         {% include 'partials/navbar.html' %}
 
         <!-- Detail Lembaga -->
-        <section class="p-6 bg-white top-0 px-20">
-            <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6">
+        <section class="p-6 bg-white px-6 sm:px-10 lg:px-20 pt-20">
+            <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8">
                 <a
                     href="{{ url_for('dtLembaga') }}"
-                    class="flex items-center mb-4 text-blue-500 hover:underline"
+                    class="flex items-center mb-6 text-blue-500 hover:text-blue-600 transition-all"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -46,17 +47,19 @@
                     Kembali
                 </a>
 
-                <div class="flex items-center mb-4">
+                <div class="flex items-center mb-6">
                     <img
                         src="{{ detail.logo_url }}"
                         alt="{{ detail.nama }}"
-                        class="w-24 h-auto mr-4"
+                        class="w-24 h-auto mr-4 rounded-md shadow-lg"
                     />
-                    <h1 class="text-2xl font-semibold">{{ detail.nama }}</h1>
+                    <h1 class="text-3xl font-semibold text-gray-800">
+                        {{ detail.nama }}
+                    </h1>
                 </div>
 
                 <!-- Informasi Lembaga -->
-                <div class="mt-4">
+                <div class="space-y-4 text-gray-700">
                     <p>
                         <strong>Alamat Kantor:</strong> {{ detail.alamat_kantor
                         }}
@@ -67,7 +70,7 @@
                         <strong>Website Resmi:</strong>
                         <a
                             href="{{ detail.web_resmi }}"
-                            class="text-blue-500 underline"
+                            class="text-blue-500 hover:text-blue-600 transition-all"
                             >{{ detail.web_resmi }}</a
                         >
                     </p>
@@ -79,5 +82,70 @@
                 </div>
             </div>
         </section>
+
+        <!-- Footer -->
+        <footer class="w-full bg-black text-white font-poppins py-12 mt-10">
+            <div class="container mx-auto flex flex-col items-center px-4">
+                <!-- Footer Description -->
+                <p class="text-sm mb-6 text-center">
+                    Pemetaan Kemiskinan Berbasis Teknologi untuk Menganalisis
+                    dan Mengatasi Tantangan Ekonomi.
+                </p>
+
+                <!-- Link Section (Horizontal) -->
+                <div class="flex space-x-6 mb-6 justify-center">
+                    <a
+                        href="#tentang-kami"
+                        class="text-white hover:text-red-400 transition-all"
+                        >Tentang Kami</a
+                    >
+                    <a
+                        href="#"
+                        class="text-white hover:text-red-400 transition-all"
+                        >Kebijakan Privasi</a
+                    >
+                    <a
+                        href="#"
+                        class="text-white hover:text-red-400 transition-all"
+                        >Kontak</a
+                    >
+                </div>
+
+                <!-- Social Media Icons Section -->
+                <div class="flex space-x-6 justify-center mb-6">
+                    <a
+                        href="#"
+                        class="text-white hover:text-red-400 transition-all"
+                    >
+                        <i class="fab fa-facebook-f h-6 w-6"></i>
+                    </a>
+                    <a
+                        href="#"
+                        class="text-white hover:text-red-400 transition-all"
+                    >
+                        <i class="fab fa-twitter h-6 w-6"></i>
+                    </a>
+                    <a
+                        href="#"
+                        class="text-white hover:text-red-400 transition-all"
+                    >
+                        <i class="fab fa-instagram h-6 w-6"></i>
+                    </a>
+                    <a
+                        href="#"
+                        class="text-white hover:text-red-400 transition-all"
+                    >
+                        <i class="fab fa-linkedin-in h-6 w-6"></i>
+                    </a>
+                </div>
+
+                <!-- Copyright -->
+                <p class="text-xs mt-6 text-center">
+                    &copy; 2024 PovertyLens. All rights reserved.
+                </p>
+            </div>
+        </footer>
+
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     </body>
 </html>

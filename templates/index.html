@@ -15,41 +15,52 @@
             type="image/x-icon"
             href="/static/images/onlylogo-colorful.svg"
         />
+        <style>
+            html {
+                scroll-behavior: smooth;
+            }
+        </style>
     </head>
     <body>
         {% include 'partials/navbar.html' %}
 
         <section
-            class="w-full h-full flex justify-center items-center bg-gradient-to-b from-gray-400 to-white absolute top-0"
+            class="w-full h-full flex justify-center items-center bg-gradient-to-b from-gray-400 to-white absolute top-0 px-4 sm:px-8 md:px-16 lg:px-20"
         >
             <div
-                class="relative w-[40rem] font-poppins group flex flex-col items-center py-20"
+                class="relative w-full max-w-[40rem] font-poppins group flex flex-col items-center py-10 sm:py-16 md:py-20"
             >
-                <h1 class="text-black font-bold text-5xl">
+                <h1
+                    class="text-black font-bold text-3xl sm:text-4xl md:text-5xl"
+                >
                     Map Of Poor Areas with
                 </h1>
                 <h1
-                    class="text-red-600 font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
+                    class="text-red-600 font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl"
                 >
                     PovertyLens
                 </h1>
-                <p class="text-black text-base font-semibold text-center pt-5">
+                <p
+                    class="text-black text-sm sm:text-base md:text-lg font-semibold text-center pt-4 sm:pt-5 md:pt-6"
+                >
                     Pemetaan Kemiskinan Berbasis Teknologi untuk Menganalisis
                     dan Mengatasi Tantangan Ekonomi, Mewujudkan Kehidupan yang
                     Lebih Baik bagi Semua.
                 </p>
 
-                <div class="pt-4">
+                <div class="pt-4 sm:pt-6 md:pt-8">
                     <a
                         href="{{ url_for('pindaiWilayah') }}"
-                        class="flex items-center space-x-2 bg-black hover:bg-red-600 px-8 py-3 rounded-full"
+                        class="flex items-center space-x-2 bg-black hover:bg-red-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full"
                     >
-                        <h1 class="text-white text-sm font-semibold">
+                        <h1
+                            class="text-white text-sm sm:text-base font-semibold"
+                        >
                             Pindai Wilayah
                         </h1>
                         <img
                             src="/static/images/iconpindai.svg"
-                            class="h-5 w-5"
+                            class="h-5 w-5 sm:h-6 sm:w-6"
                         />
                     </a>
                 </div>
@@ -79,6 +90,7 @@
         </section>
 
         <section
+            id="tentang-kami"
             class="py-[8rem] px-10 sm:px-20 md:px-40 bg-gradient-to-b from-gray-200 to-white font-poppins flex items-center justify-center"
         >
             <div class="flex flex-col md:flex-row items-center">
@@ -167,24 +179,19 @@
                 Komentar Pengguna
             </h1>
 
-            <!-- <div class="mt-10">
-                <div class="mt-4 space-y-2">
-                    {% for ulasan_data in ulasan_data %}
-                    <div class="bg-white p-4 rounded-md border border-gray-300 shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out">
-                        <div class="flex justify-start items-start">
-                            <p class="text-base text-gray-700 flex-1 text-left">
-                                {{ ulasan_data.ulasan }}
-                            </p>
-                            <p class="text-sm text-gray-500 ml-4">
-                                {{ ulasan_data.created_at.strftime('%d %b %Y, %H:%M') }}
-                            </p>
-                        </div>
-                    </div>
-                    {% else %}
-                    <p class="text-gray-500 text-center">Belum ada ulasan.</p>
-                    {% endfor %}
-                </div>
-            </div> -->
+            <p class="text-gray-700 text-lg mb-6">
+                Kami sangat menghargai setiap pendapat dan masukan yang Anda
+                berikan. Dengan berbagi pengalaman atau saran, Anda turut
+                berperan dalam membantu kami untuk terus meningkatkan layanan
+                dan mencapai tujuan kami dalam memberikan manfaat yang lebih
+                besar untuk masyarakat.
+            </p>
+
+            <p class="text-gray-600 text-base mb-8">
+                Apakah Anda memiliki pengalaman yang ingin dibagikan? Atau
+                mungkin ada saran untuk kami agar bisa lebih baik lagi? Kami
+                ingin mendengar suara Anda!
+            </p>
 
             <form
                 action="{{ url_for('add_ulasan') }}"
@@ -194,8 +201,9 @@
                 <label
                     for="ulasan"
                     class="block mt-4 text-sm font-semibold text-gray-700"
-                    >Komentar</label
                 >
+                    Komentar
+                </label>
                 <textarea
                     id="ulasan"
                     name="ulasan"
