@@ -94,6 +94,7 @@
             class="py-[8rem] px-10 sm:px-20 md:px-40 bg-gradient-to-b from-gray-200 to-white font-poppins flex items-center justify-center"
         >
             <div class="flex flex-col md:flex-row items-center">
+                <!-- Teks di kiri -->
                 <div class="w-full md:w-1/2 pr-0 md:pr-10 mb-10 md:mb-0">
                     <img
                         src="/static/images/slum-area.jpg"
@@ -136,13 +137,14 @@
         </section>
 
         <section
-            class="py-[2rem] sm:py-[4rem] md:py-[8rem] px-10 sm:px-20 md:px-40 bg-gradient-to-b from-gray-200 to-white font-poppins flex items-center"
+            class="py-[8rem] px-10 sm:px-20 md:px-40 bg-gradient-to-b from-gray-200 to-white font-poppins flex items-center justify-center"
         >
             <div
-                class="flex flex-col md:flex-row justify-center items-center space-y-8 sm:space-y-10 md:space-y-0 md:space-x-10"
+                class="flex flex-col md:flex-row justify-between items-center w-full max-w-screen-lg mx-auto"
             >
-                <!-- Gambar di atas untuk responsive -->
-                <div class="w-full md:w-1/2 order-1 md:order-1">
+                <div
+                    class="w-full md:w-1/2 pr-0 md:pr-10 mb-10 md:mb-0 order-1 md:order-2"
+                >
                     <img
                         src="/static/images/flow.png"
                         alt="Sistematis Fitur Pindai Wilayah"
@@ -150,16 +152,17 @@
                     />
                 </div>
 
-                <div class="w-full md:w-1/2 text-left order-2 md:order-2">
-                    <h1 class="text-black font-bold text-2xl">
+                <div
+                    class="w-full md:w-1/2 text-left pl-0 md:pl-10 order-2 md:order-1 md:mr-10"
+                >
+                    <h1 class="text-black text-4xl font-bold mb-5">
                         Sistematis Fitur Pindai Wilayah
                     </h1>
-                    <p class="text-black pt-4">
+                    <p class="text-gray-700 text-lg mb-5">
                         Fitur pindai wilayah di PovertyLens memberikan cara yang
                         efisien untuk menganalisis dan menentukan prioritas
                         bantuan di suatu wilayah berdasarkan data spasial yang
-                        diambil dari peta interaktif. Berikut adalah
-                        langkah-langkah sistematis dalam menggunakan fitur ini:
+                        diambil dari peta interaktif.
                     </p>
 
                     <a
@@ -173,52 +176,73 @@
         </section>
 
         <section
-            class="py-[5rem] justify-center text-center px-5 md:px-40 bg-gradient-to-b from-gray-200 to-white font-poppins"
+            id="komentar"
+            class="py-[2rem] sm:py-[4rem] md:py-[8rem] px-10 sm:px-20 md:px-40 bg-gradient-to-b from-gray-200 to-white font-poppins flex items-center"
         >
-            <h1 class="text-black font-bold text-2xl mb-4">
-                Komentar Pengguna
-            </h1>
-
-            <p class="text-gray-700 text-lg mb-6">
-                Kami sangat menghargai setiap pendapat dan masukan yang Anda
-                berikan. Dengan berbagi pengalaman atau saran, Anda turut
-                berperan dalam membantu kami untuk terus meningkatkan layanan
-                dan mencapai tujuan kami dalam memberikan manfaat yang lebih
-                besar untuk masyarakat.
-            </p>
-
-            <p class="text-gray-600 text-base mb-8">
-                Apakah Anda memiliki pengalaman yang ingin dibagikan? Atau
-                mungkin ada saran untuk kami agar bisa lebih baik lagi? Kami
-                ingin mendengar suara Anda!
-            </p>
-
-            <form
-                action="{{ url_for('add_ulasan') }}"
-                method="POST"
-                class="w-full max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md pt-4 mt-2"
+            <div
+                class="flex flex-col md:flex-row justify-center items-center w-full max-w-screen-xl mx-auto"
             >
-                <label
-                    for="ulasan"
-                    class="block mt-4 text-sm font-semibold text-gray-700"
-                >
-                    Komentar
-                </label>
-                <textarea
-                    id="ulasan"
-                    name="ulasan"
-                    required
-                    rows="4"
-                    class="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600"
-                    placeholder="Tulis komentar Anda"
-                ></textarea>
-                <button
-                    type="submit"
-                    class="w-full mt-6 py-2 bg-orange-500 text-white font-semibold rounded-full hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-red-600"
-                >
-                    Kirim Komentar
-                </button>
-            </form>
+                <div class="w-full md:w-1/2 text-left mb-8 md:mb-0 md:mr-10">
+                    <h1 class="text-black font-bold text-2xl mb-4">
+                        Komentar Pengguna
+                    </h1>
+                    <p class="text-gray-700 text-lg mb-6">
+                        Kami sangat menghargai setiap pendapat dan masukan yang
+                        Anda berikan. Dengan berbagi pengalaman atau saran, Anda
+                        turut berperan dalam membantu kami untuk terus
+                        meningkatkan layanan dan mencapai tujuan kami dalam
+                        memberikan manfaat yang lebih besar untuk masyarakat.
+                    </p>
+                    <p class="text-gray-600 text-base mb-8">
+                        Apakah Anda memiliki pengalaman yang ingin dibagikan?
+                        Atau mungkin ada saran untuk kami agar bisa lebih baik
+                        lagi? Kami ingin mendengar suara Anda!
+                    </p>
+                </div>
+
+                <div class="w-full md:w-1/2">
+                    <form
+                        action="{{ url_for('add_ulasan') }}"
+                        method="POST"
+                        class="w-full max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md"
+                    >
+                        <label
+                            for="email"
+                            class="block text-sm font-semibold text-gray-700"
+                            >Email</label
+                        >
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            required
+                            class="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600"
+                            placeholder="Masukkan email Anda"
+                        />
+
+                        <label
+                            for="ulasan"
+                            class="block mt-4 text-sm font-semibold text-gray-700"
+                            >Komentar</label
+                        >
+                        <textarea
+                            id="ulasan"
+                            name="ulasan"
+                            required
+                            rows="4"
+                            class="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600"
+                            placeholder="Tulis komentar Anda"
+                        ></textarea>
+
+                        <button
+                            type="submit"
+                            class="w-full mt-6 py-2 bg-orange-500 text-white font-semibold rounded-full hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-red-600"
+                        >
+                            Kirim Komentar
+                        </button>
+                    </form>
+                </div>
+            </div>
         </section>
 
         {% include 'partials/footer.html' %}

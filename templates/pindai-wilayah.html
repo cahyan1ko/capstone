@@ -18,6 +18,14 @@
             rel="stylesheet"
             href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        />
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
         <script src="https://unpkg.com/leaflet-image@0.4.1/leaflet-image.js"></script>
@@ -90,13 +98,12 @@
 
                     <div id="previewContainer" class="mt-4"></div>
 
-                    <div class="mb-4 relative">
+                    <div class="mb-4">
                         <label
                             for="koordinat"
                             class="block text-sm font-medium text-gray-700"
+                            >Koordinat</label
                         >
-                            Koordinat
-                        </label>
                         <div class="flex items-center">
                             <input
                                 type="text"
@@ -108,7 +115,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-4">
+                    <div class="mb-4">
                         <label
                             for="kelurahanDisplay"
                             class="block text-sm font-medium text-gray-700"
@@ -127,21 +134,39 @@
                         <label
                             for="bantuan"
                             class="block text-sm font-medium text-gray-700"
-                            >Bantuan yang Dibutuhkan</label
+                            >Kategori Bantuan</label
                         >
-                        <input
-                            type="text"
+                        <select
                             id="bantuan"
                             class="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                            placeholder="Bantuan yang dibutuhkan"
-                        />
+                        >
+                            <option value="" disabled selected>
+                                Pilih kategori bantuan
+                            </option>
+                            <option value="Kesehatan">Bantuan Kesehatan</option>
+                            <option value="Pendidikan">
+                                Bantuan Pendidikan
+                            </option>
+                            <option value="Sosial dan Kesejahteraan">
+                                Bantuan Sosial dan Kesejahteraan
+                            </option>
+                            <option value="Bencana dan Penanggulangan">
+                                Bantuan Bencana dan Penanggulangan
+                            </option>
+                            <option value="Infrastruktur dan Ekonomi">
+                                Bantuan Infrastruktur dan Ekonomi
+                            </option>
+                            <option value="Pengembangan Komunitas">
+                                Pengembangan Komunitas
+                            </option>
+                        </select>
                     </div>
 
                     <div class="mb-4">
                         <label
                             for="laporan"
                             class="block text-sm font-medium text-gray-700"
-                            >Laporan anda(Opsional)</label
+                            >Laporan Anda (Opsional)</label
                         >
                         <textarea
                             id="laporan"
@@ -150,6 +175,7 @@
                             placeholder="Tuliskan laporan Anda..."
                         ></textarea>
                     </div>
+
                     <button
                         id="submitButton"
                         class="bg-black text-white px-4 py-2 rounded mt-4"
@@ -174,26 +200,18 @@
 
         <footer class="w-full bg-black text-white font-poppins py-10 mt-10">
             <div class="container mx-auto flex flex-col items-center px-4">
-                <!-- Footer Description -->
                 <p class="text-sm mb-6 text-center">
                     Pemetaan Kemiskinan Berbasis Teknologi untuk Menganalisis
                     dan Mengatasi Tantangan Ekonomi.
                 </p>
 
-                <!-- Link Section (Horizontal) -->
-                <div class="flex space-x-6 mb-4 justify-center">
-                    <a
-                        href="#tentang-kami"
-                        class="text-white hover:text-red-400"
-                        >Tentang Kami</a
-                    >
-                    <a href="#" class="text-white hover:text-red-400"
-                        >Kebijakan Privasi</a
-                    >
-                    <a href="#" class="text-white hover:text-red-400">Kontak</a>
+                <div class="flex items-center justify-center">
+                    <img
+                        src="/static/images/logocolorful.svg"
+                        alt="PovertyLens"
+                        class="h-15 w-15"
+                    />
                 </div>
-
-                <!-- Social Media Icons Section -->
                 <div class="flex space-x-4 justify-center mb-4">
                     <a href="#" class="text-white hover:text-red-400">
                         <i class="fab fa-facebook-f h-6 w-6"></i>
@@ -469,22 +487,83 @@
                         kepadatanResult.textContent = `Kepadatan Penduduk: ${kepadatanPendudukBulatan} orang/km² - Wilayah ini teridentifikasi ${statusKepadatan} Penduduk.`
                         resultContainer.appendChild(kepadatanResult)
 
-                        // const percentageList = document.createElement("ul")
-                        // percentageList.style.listStyleType = "none"
-                        // percentageList.style.padding = "0"
+                        var bantuanValue =
+                            document.getElementById("bantuan").value
+                        var outputText = ""
 
-                        // for (const [category, percentage] of Object.entries(
-                        //     result.percentages,
-                        // )) {
-                        //     const listItem = document.createElement("li")
-                        //     listItem.textContent = `${category}: ${percentage.toFixed(
-                        //         2,
-                        //     )}%`
-                        //     listItem.style.marginBottom = "5px"
-                        //     percentageList.appendChild(listItem)
-                        // }
+                        switch (bantuanValue) {
+                            case "Kesehatan":
+                                outputText =
+                                    "Anda memilih bantuan dalam bidang Kesehatan."
+                                break
+                            case "Pendidikan":
+                                outputText =
+                                    "Anda memilih bantuan dalam bidang Pendidikan."
+                                break
+                            case "Sosial dan Kesejahteraan":
+                                outputText =
+                                    "Anda memilih bantuan dalam bidang Sosial dan Kesejahteraan."
+                                break
+                            case "Bencana dan Penanggulangan":
+                                outputText =
+                                    "Anda memilih bantuan dalam bidang Bencana dan Penanggulangan."
+                                break
+                            case "Infrastruktur dan Ekonomi":
+                                outputText =
+                                    "Anda memilih bantuan dalam bidang Infrastruktur dan Ekonomi."
+                                break
+                            case "Pengembangan Komunitas":
+                                outputText =
+                                    "Anda memilih bantuan dalam bidang Pengembangan Komunitas."
+                                break
+                            default:
+                                outputText =
+                                    "Silakan pilih kategori bantuan terlebih dahulu."
+                                break
+                        }
 
-                        // resultContainer.appendChild(percentageList)
+                        const kategoriResult = document.createElement("p")
+                        kategoriResult.textContent = outputText
+                        resultContainer.appendChild(kategoriResult)
+
+                        fetch(`/get_lembaga?bantuan=${bantuanValue}`)
+                            .then((response) => response.json())
+                            .then((data) => {
+                                if (data.lembaga.length > 0) {
+                                    var lembagaHeader =
+                                        document.createElement("p")
+                                    lembagaHeader.textContent =
+                                        "Lembaga Terkait:"
+                                    resultContainer.appendChild(lembagaHeader) // Add header for lembaga list
+
+                                    data.lembaga.forEach((lembaga) => {
+                                        var lembagaDetails =
+                                            document.createElement("p")
+                                        lembagaDetails.innerHTML = `
+                        <strong>${lembaga.nama}</strong><br>
+                        Alamat: ${lembaga.alamat}<br>
+                        Telepon: ${lembaga.telepon}<br>
+                        Website: <a href="${lembaga.web}" target="_blank">${lembaga.web}</a><br>
+                    `
+                                        resultContainer.appendChild(
+                                            lembagaDetails,
+                                        )
+                                        var hr = document.createElement("hr")
+                                        resultContainer.appendChild(hr)
+                                    })
+                                } else {
+                                    var noLembagaMessage =
+                                        document.createElement("p")
+                                    noLembagaMessage.textContent =
+                                        "Tidak ada lembaga terkait yang ditemukan."
+                                    resultContainer.appendChild(
+                                        noLembagaMessage,
+                                    )
+                                }
+                            })
+                            .catch((error) => {
+                                console.error("Error fetching lembaga:", error)
+                            })
                     }
                     const answeringSection =
                         document.getElementById("answeringSection")

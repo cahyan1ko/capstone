@@ -81,12 +81,23 @@
                             <ul class="space-y-2">
                                 {% for ulasan in ulasan_positif %}
                                 <li class="flex justify-between items-center">
-                                    <p>"{{ ulasan.ulasan }}"</p>
-                                    <span class="text-sm text-gray-500"
-                                        >{{
-                                        ulasan.created_at.strftime('%Y-%m-%d')
-                                        }}</span
-                                    >
+                                    <div>
+                                        <p>"{{ ulasan.ulasan }}"</p>
+                                        <span class="text-sm text-gray-500">
+                                            {{
+                                            ulasan.created_at.strftime('%Y-%m-%d')
+                                            }}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500"
+                                            >Email: {{ ulasan.email }}</span
+                                        >
+                                    </div>
+                                </li>
+                                {% else %}
+                                <li class="text-gray-500">
+                                    Tidak ada ulasan positif saat ini.
                                 </li>
                                 {% endfor %}
                             </ul>
@@ -100,12 +111,23 @@
                             <ul class="space-y-2">
                                 {% for ulasan in ulasan_negatif %}
                                 <li class="flex justify-between items-center">
-                                    <p>"{{ ulasan.ulasan }}"</p>
-                                    <span class="text-sm text-gray-500"
-                                        >{{
-                                        ulasan.created_at.strftime('%Y-%m-%d')
-                                        }}</span
-                                    >
+                                    <div>
+                                        <p>"{{ ulasan.ulasan }}"</p>
+                                        <span class="text-sm text-gray-500">
+                                            {{
+                                            ulasan.created_at.strftime('%Y-%m-%d')
+                                            }}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500"
+                                            >Email: {{ ulasan.email }}</span
+                                        >
+                                    </div>
+                                </li>
+                                {% else %}
+                                <li class="text-gray-500">
+                                    Tidak ada ulasan negatif saat ini.
                                 </li>
                                 {% endfor %}
                             </ul>
@@ -116,13 +138,21 @@
         </div>
 
         <script>
-                    const ctx = document.getElementById('pieChart').getContext('2d');
+            const ctx = document.getElementById('pieChart').getContext('2d');
+
+            // Hitung total data
+            const total = {{ positif_count }} + {{ negatif_count }};
+
+            // Hitung persentase untuk setiap kategori
+            const positifPercentage = ({{ positif_count }} / total) * 100;
+            const negatifPercentage = ({{ negatif_count }} / total) * 100;
+
             const pieChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
                     labels: ['Positif', 'Negatif'],
                     datasets: [{
-                        data: [{{ positif_count }}, {{ negatif_count }}],
+                        data: [positifPercentage, negatifPercentage], // Gunakan persentase
                         backgroundColor: ['#22c55e', '#ef4444'],
                     }]
                 },
@@ -135,7 +165,7 @@
                             callbacks: {
                                 label: function (tooltipItem) {
                                     const value = tooltipItem.raw;
-                                    return `${tooltipItem.label}: ${value}%`;
+                                    return `${tooltipItem.label}: ${value.toFixed(2)}%`; // Menampilkan persentase dengan 2 angka desimal
                                 }
                             }
                         }
@@ -162,6 +192,7 @@
                     },
                 }
             });
+
         </script>
     </body>
 </html>

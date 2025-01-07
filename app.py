@@ -63,6 +63,7 @@ class Ulasan(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ulasan = db.Column(db.Text, nullable=False)
     label = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     def __repr__(self):
         return f"<Ulasan {self.id}: {self.ulasan[:20]}...>"
@@ -85,6 +86,7 @@ class DetailLembaga(db.Model):
     deskripsi = db.Column(db.Text, nullable=True)
     informasi = db.Column(db.Text, nullable=True)
     nama_lengkap = db.Column(db.Text, nullable=True)
+    kategori = db.Column(db.String(255), nullable=True)
 
 class Kemiskinan(db.Model):
     __tablename__ = 'kemiskinan'   
@@ -278,16 +280,20 @@ vectorizer = joblib.load('models/vectorizer.pkl')
 @app.route('/add_ulasan', methods=['POST'])
 def add_ulasan():
     ulasan_text = request.form.get('ulasan')
+    email = request.form.get('email')
     
     if not ulasan_text:
         flash("Ulasan tidak ditemukan!", "error")
+        return redirect(url_for('index'))
+    if not email:
+        flash("Email tidak ditemukan!", "error")
         return redirect(url_for('index'))
     
     ulasan_vec = vectorizer.transform([ulasan_text])
     label_prediksi = model_sentimen.predict(ulasan_vec)
     label = 'positif' if label_prediksi[0] == 1 else 'negatif'
     
-    ulasan_baru = Ulasan(ulasan=ulasan_text, label=label)
+    ulasan_baru = Ulasan(ulasan=ulasan_text, label=label, email=email)
     db.session.add(ulasan_baru)
     db.session.commit()
 
@@ -310,6 +316,24 @@ def get_populasi():
 
     populasi = data_kelurahan.populasi
     return jsonify({"kelurahan": kelurahan_name, "populasi": populasi})
+
+@app.route('/get_lembaga', methods=['GET'])
+def get_lembag_output():
+    kategori = request.args.get('bantuan').lower()
+
+    lembaga = DetailLembaga.query.filter(DetailLembaga.kategori.ilike(kategori)).all()
+
+    result = []
+    for lembaga_item in lembaga:
+        result.append({
+            "nama": lembaga_item.nama_lengkap,
+            "alamat": lembaga_item.alamat_kantor,
+            "telepon": lembaga_item.telepon,
+            "web": lembaga_item.web_resmi
+        })
+
+    return jsonify({"lembaga": result})
+
 
 @app.route("/daftar-lembaga")
 def dtLembaga():
