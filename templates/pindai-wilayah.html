@@ -162,7 +162,7 @@
                         </select>
                     </div>
 
-                    <div class="mb-4">
+                    <!-- <div class="mb-4">
                         <label
                             for="laporan"
                             class="block text-sm font-medium text-gray-700"
@@ -174,7 +174,7 @@
                             rows="3"
                             placeholder="Tuliskan laporan Anda..."
                         ></textarea>
-                    </div>
+                    </div> -->
 
                     <button
                         id="submitButton"
@@ -240,6 +240,7 @@
                 scrollWheelZoom: false,
                 dragging: true,
                 doubleClickZoom: false,
+                touchZoom: false,
             }).setView([-6.858944, 109.147861], 16)
 
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -534,22 +535,85 @@
                                         document.createElement("p")
                                     lembagaHeader.textContent =
                                         "Lembaga Terkait:"
-                                    resultContainer.appendChild(lembagaHeader) // Add header for lembaga list
+                                    resultContainer.appendChild(lembagaHeader)
 
                                     data.lembaga.forEach((lembaga) => {
-                                        var lembagaDetails =
-                                            document.createElement("p")
-                                        lembagaDetails.innerHTML = `
-                        <strong>${lembaga.nama}</strong><br>
-                        Alamat: ${lembaga.alamat}<br>
-                        Telepon: ${lembaga.telepon}<br>
-                        Website: <a href="${lembaga.web}" target="_blank">${lembaga.web}</a><br>
-                    `
-                                        resultContainer.appendChild(
-                                            lembagaDetails,
+                                        var card = document.createElement("div")
+                                        card.classList.add(
+                                            "bg-white",
+                                            "border",
+                                            "border-gray-300",
+                                            "rounded-lg",
+                                            "p-6",
+                                            "mb-4",
+                                            "shadow-lg",
                                         )
-                                        var hr = document.createElement("hr")
-                                        resultContainer.appendChild(hr)
+
+                                        var lembagaName =
+                                            document.createElement("h3")
+                                        lembagaName.textContent = lembaga.nama
+                                        lembagaName.classList.add(
+                                            "text-xl",
+                                            "font-semibold",
+                                            "mb-2",
+                                        )
+                                        card.appendChild(lembagaName)
+
+                                        var lembagaAlamat =
+                                            document.createElement("p")
+                                        lembagaAlamat.innerHTML = `<strong>Alamat:</strong> ${lembaga.alamat}`
+                                        lembagaAlamat.classList.add(
+                                            "text-sm",
+                                            "text-gray-700",
+                                            "mb-2",
+                                        )
+                                        card.appendChild(lembagaAlamat)
+
+                                        var lembagaTelepon =
+                                            document.createElement("p")
+                                        lembagaTelepon.innerHTML = `<strong>Telepon:</strong> ${lembaga.telepon}`
+                                        lembagaTelepon.classList.add(
+                                            "text-sm",
+                                            "text-gray-700",
+                                            "mb-2",
+                                        )
+                                        card.appendChild(lembagaTelepon)
+
+                                        // var lembagaWebsite =
+                                        //     document.createElement("p")
+                                        // lembagaWebsite.innerHTML = `<strong>Website:</strong> <a href="${lembaga.web}" target="_blank" class="text-blue-500 hover:underline">${lembaga.web}</a>`
+                                        // lembagaWebsite.classList.add(
+                                        //     "text-sm",
+                                        //     "text-gray-700",
+                                        //     "mb-2",
+                                        // )
+                                        // card.appendChild(lembagaWebsite)
+
+                                        var lihatWebsiteButton =
+                                            document.createElement("a")
+                                        lihatWebsiteButton.href = lembaga.web
+                                        lihatWebsiteButton.target = "_blank"
+
+                                        var button =
+                                            document.createElement("button")
+                                        button.textContent = "Lihat Website"
+                                        button.classList.add(
+                                            "mt-4",
+                                            "bg-green-500",
+                                            "text-white",
+                                            "font-semibold",
+                                            "py-2",
+                                            "px-4",
+                                            "rounded-lg",
+                                            "hover:bg-green-700",
+                                        )
+                                        lihatWebsiteButton.appendChild(button)
+                                        card.appendChild(lihatWebsiteButton)
+
+                                        resultContainer.appendChild(card)
+                                        resultContainer.appendChild(
+                                            document.createElement("hr"),
+                                        )
                                     })
                                 } else {
                                     var noLembagaMessage =
