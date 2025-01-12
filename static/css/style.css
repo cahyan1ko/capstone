@@ -110,7 +110,7 @@ section {
     max-width: 70%;
 }
 
-.kemiskinan-section {
+/* .kemiskinan-section {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -137,8 +137,7 @@ section {
 }
 
 .chart-kemiskinan {
-    width: 1000px;
-    max-width: 1000px;
+    width: 100%;
     height: auto;
 }
 
@@ -152,7 +151,7 @@ section {
     }
 
     .chart-kemiskinan {
-        max-width: 100%;
+        width: 100%;
         height: auto;
     }
 }
@@ -161,11 +160,7 @@ section {
     .title, .sub-title {
         font-size: 1.25rem;
     }
-}
-
-
-
-
+} */
 
 .title-lembaga {
     font-size: 28px;

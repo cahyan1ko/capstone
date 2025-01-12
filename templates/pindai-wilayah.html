@@ -241,7 +241,33 @@
                 dragging: true,
                 doubleClickZoom: false,
                 touchZoom: false,
-            }).setView([-6.858944, 109.147861], 16)
+            })
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function (position) {
+                        var lat = position.coords.latitude
+                        var lng = position.coords.longitude
+
+                        map.setView([lat, lng], 16)
+
+                        var marker = L.marker([lat, lng]).addTo(map).openPopup()
+
+                        var markerDuration = 3000
+
+                        setTimeout(function () {
+                            map.removeLayer(marker)
+                        }, markerDuration)
+                    },
+                    function (error) {
+                        console.error("Geolocation error: " + error.message)
+
+                        map.setView([-6.858944, 109.147861], 16)
+                    },
+                )
+            } else {
+                map.setView([-6.858944, 109.147861], 16)
+            }
 
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
                 attribution:
@@ -266,6 +292,7 @@
                     )
                     previewContainerMessage.innerHTML = ""
 
+                    var captureButton = document.getElementById("captureButton")
                     captureButton.innerHTML =
                         'Loading... <span class="spinner"></span>'
 
@@ -286,29 +313,44 @@
                             data.address.suburb ||
                             data.address.village ||
                             "Tidak ditemukan"
-
                         console.log("Kelurahan:", kelurahan)
 
                         var kelurahanInput =
                             document.getElementById("kelurahanDisplay")
-                        kelurahanInput.value = kelurahan
 
-                        const kelurahanLowercase =
-                            kelurahanInput.value.toLowerCase()
+                        const kelurahanLowercase = kelurahan.toLowerCase()
 
                         const populasiResponse = await fetch(
                             `/get_populasi?kelurahan=${kelurahanLowercase}`,
                         )
                         const populasiData = await populasiResponse.json()
+
                         if (populasiData.error) {
                             alert(populasiData.error)
+
+                            captureButton.innerHTML = "Capture Map"
+                            var spinner =
+                                captureButton.querySelector(".spinner")
+                            if (spinner) {
+                                spinner.remove() // Menghapus spinner
+                            }
+
+                            kelurahanInput.value = "" // Kosongkan input kelurahan
                             return
                         }
 
                         const populasi = populasiData.populasi
                         console.log("Populasi kelurahan:", populasi)
+
+                        kelurahanInput.value = kelurahan
                     } catch (error) {
                         console.error("Gagal mengambil kelurahan:", error)
+
+                        captureButton.innerHTML = "Capture Map"
+                        var spinner = captureButton.querySelector(".spinner")
+                        if (spinner) {
+                            spinner.remove()
+                        }
                     }
 
                     html2canvas(document.getElementById("mapid"), {
@@ -321,8 +363,6 @@
                                 document.getElementById("previewContainer")
                             previewContainer.dataset.image = imgData
 
-                            var captureButton =
-                                document.getElementById("captureButton")
                             captureButton.textContent = "✔️Tersimpan"
 
                             console.log("Capture berhasil:", imgData)
@@ -378,11 +418,15 @@
                     var bantuanInput = document.getElementById("bantuan")
                     bantuanInput.value = ""
 
-                    var laporanInput = document.getElementById("laporan")
-                    laporanInput.value = ""
-
                     var captureButton = document.getElementById("captureButton")
+
                     captureButton.textContent = "Capture Map"
+
+                    var answeringSection =
+                        document.getElementById("answeringSection")
+                    if (answeringSection) {
+                        answeringSection.innerHTML = ""
+                    }
 
                     console.log("Reset berhasil")
                 }

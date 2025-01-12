@@ -121,22 +121,22 @@ def handle_none(value):
 ### CHATBOT
 ### CHATBOT
 
-model_name = "models/fine_tuned_gpt_neo_poverty_lens"
+model_name = "models/save_model_chatbot"
 tokenizer = AutoTokenizer.from_pretrained(model_name, local_files_only=True)
 model = AutoModelForCausalLM.from_pretrained(model_name, local_files_only=True)
 
 def generate_response(input_text, max_new_tokens=100):
     prompt = (
-        "Anda adalah asisten cerdas PovertyLens, aplikasi pemetaan kemiskinan. "
-        "Jawaban Anda harus singkat, jelas, dan hanya fokus pada informasi yang relevan dengan kemiskinan, pemetaan sosial, atau bantuan sosial. "
-        "Jangan berikan informasi umum atau yang tidak terkait.\n\n"
+        # "Anda adalah asisten cerdas PovertyLens, aplikasi pemetaan kemiskinan. "
+        # "Jawaban Anda harus singkat, jelas, dan hanya fokus pada informasi yang relevan dengan kemiskinan, pemetaan sosial, atau bantuan sosial. "
+        # "Jangan berikan informasi umum atau yang tidak terkait.\n\n"
         
-        "Contoh Pertanyaan dan Jawaban:\n"
-        "Pertanyaan: Apa itu kemiskinan absolut?\n"
-        "Jawab: Kemiskinan absolut adalah keadaan hidup di bawah garis kemiskinan dengan akses yang sangat terbatas ke kebutuhan dasar.\n\n"
+        # "Contoh Pertanyaan dan Jawaban:\n"
+        # "Pertanyaan: Apa itu aplikasi pemetaan kemiskinan?\n"
+        # "Jawab: Aplikasi pemetaan kemiskinan adalah platform yang digunakan untuk menganalisis data kemiskinan di wilayah tertentu.\n\n"
         
-        "Pertanyaan: Bagaimana aplikasi ini membantu menemukan lokasi bantuan sosial?\n"
-        "Jawab: Aplikasi ini menunjukkan peta lembaga bantuan sosial terdekat yang dapat diakses oleh masyarakat.\n\n"
+        # "Pertanyaan: Bagaimana saya bisa menganalisis area dengan lahan terbangun tinggi?\n"
+        # "Jawab: Dengan Pindai Wilayah, pengguna dapat mengidentifikasi area dengan lahan terbangun tinggi.\n\n"
         
         "Pertanyaan: {input_text}\nJawab:"
     )
@@ -421,6 +421,7 @@ def api_detail_lembaga(lembaga_id):
             'telepon': detail.telepon,
             'email': detail.email,
             'web_resmi': detail.web_resmi,
+            'nama_lengkap': detail.nama_lengkap,
             'deskripsi': detail.deskripsi,
             'informasi': detail.informasi
         }

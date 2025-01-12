@@ -72,19 +72,15 @@
         ></section>
 
         <section
-            class="flex justify-center items-center text-left px-40 bg-gradient-to-b from-gray-200 to-white font-poppins h-screen"
+            class="flex justify-center items-center text-left px-4 py-8 md:px-40 bg-gradient-to-b from-gray-200 to-white h-screen"
         >
-            <div class="text-center">
-                <h1 class="text-black font-bold text-2xl pt-4">
+            <div class="text-center w-full max-w-6xl">
+                <h1 class="text-black font-bold text-3xl pt-4">
                     Persentase Penduduk Miskin
                 </h1>
-                <h1 class="text-red-400 font-bold text-2xl">Kota Tegal</h1>
+                <h1 class="text-red-400 font-bold text-3xl">Kota Tegal</h1>
                 <div class="px-8 py-4">
-                    <canvas
-                        class="chart-kemiskinan"
-                        id="kemiskinanChart"
-                        width="100%"
-                    ></canvas>
+                    <canvas id="kemiskinanChart" class="h-96 w-full"></canvas>
                 </div>
             </div>
         </section>
@@ -322,6 +318,7 @@
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     scales: {
                         y: {
                             beginAtZero: true,
@@ -339,6 +336,7 @@
                     }
                 }
             });
+
 
             const bubbleIcon = document.getElementById("bubble-icon")
             const chatRoom = document.getElementById("chat-room")
