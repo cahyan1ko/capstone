@@ -7,4 +7,5 @@
 *.safetensors
 
 # Ignore specific model directory
+models/save_model_chatbot/
 models/fine_tuned_gpt_neo_poverty_lens/

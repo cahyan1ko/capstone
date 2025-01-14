@@ -182,6 +182,172 @@
                         </table>
                     </div>
                 </div>
+
+                <div class="mx-auto p-6 bg-white rounded shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">
+                        Tentang Garis Kemiskinan
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Kolom Kiri: Penjelasan -->
+                        <div>
+                            <p>
+                                <strong>Garis Kemiskinan</strong> adalah batas
+                                yang digunakan untuk menentukan apakah seseorang
+                                atau keluarga hidup dalam kondisi miskin, dengan
+                                membandingkan pendapatan atau konsumsi mereka
+                                dengan biaya kebutuhan dasar hidup.
+                            </p>
+
+                            <h3 class="text-xl font-semibold mt-4">
+                                Landasan Teorinya
+                            </h3>
+                            <p>
+                                Landasan teori yang digunakan dalam penetapan
+                                garis kemiskinan antara lain adalah
+                                <strong>Teori Kebutuhan Dasar</strong>, yang
+                                menekankan bahwa kemiskinan tidak hanya dilihat
+                                dari pendapatan, tetapi juga dari akses terhadap
+                                barang dan jasa yang diperlukan untuk hidup
+                                layak.
+                            </p>
+
+                            <h3 class="text-xl font-semibold mt-4">
+                                Latar Belakang
+                            </h3>
+                            <p>
+                                Pemerintah dan organisasi internasional
+                                menggunakan garis kemiskinan untuk mengukur
+                                tingkat kemiskinan di suatu wilayah, yang
+                                membantu dalam merancang kebijakan sosial dan
+                                ekonomi yang lebih baik.
+                            </p>
+
+                            <h3 class="text-xl font-semibold mt-4">
+                                Pengaruh terhadap Kehidupan
+                            </h3>
+                            <p>
+                                Garis kemiskinan berpengaruh pada akses individu
+                                terhadap kebutuhan dasar dan pada tingkat
+                                kesejahteraan mereka. Bagi negara, tingkat
+                                kemiskinan yang tinggi dapat menghambat
+                                pertumbuhan ekonomi dan sosial.
+                            </p>
+                        </div>
+
+                        <!-- Kolom Kanan: Gambar atau Infografis -->
+                        <div class="flex justify-center">
+                            <img
+                                src="path/to/poverty-line-infographic.jpg"
+                                alt="Infografis Garis Kemiskinan"
+                                class="rounded-lg shadow-md"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mx-auto p-6 bg-orange-100 rounded-lg mt-6">
+                    <h2 class="text-2xl font-bold mb-4 text-center">
+                        Garis Kemiskinan Tahun 2024
+                    </h2>
+                    <p class="text-center">
+                        Cari tahu lebih lanjut tentang bagaimana garis
+                        kemiskinan memengaruhi kehidupan dan ekonomi Anda.
+                    </p>
+                </div>
+
+                <div class="mx-auto bg-white p-6 rounded shadow-md">
+                    <h1 class="text-2xl font-bold mb-4">
+                        Ayo Cek Garis Kemiskinan Anda!
+                    </h1>
+                    <form id="povertyForm">
+                        <div class="mb-4">
+                            <label for="year" class="block text-gray-700"
+                                >Pilih Tahun</label
+                            >
+                            <select
+                                id="year"
+                                name="year"
+                                class="w-full p-2 border border-gray-300 rounded"
+                            >
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                                <option value="2021">2021</option>
+                                <option value="2020">2020</option>
+                                <option value="2019">2019</option>
+                                <option value="2018">2018</option>
+                                <option value="2017">2017</option>
+                                <option value="2016">2016</option>
+                                <option value="2015">2015</option>
+                                <option value="2013">2013</option>
+                                <option value="2012">2012</option>
+                                <option value="2011">2011</option>
+                                <option value="2010">2010</option>
+                                <option value="2009">2009</option>
+                                <option value="2008">2008</option>
+                                <option value="2007">2007</option>
+                                <option value="2006">2006</option>
+                                <option value="2005">2005</option>
+                                <option value="2004">2004</option>
+                                <option value="2003">2003</option>
+                                <option value="2002">2002</option>
+                            </select>
+                            <p
+                                id="povertyLineDisplay"
+                                class="mt-2 text-gray-700 text-sm"
+                            ></p>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="income" class="block text-gray-700"
+                                >Pendapatan per Bulan (Rp)</label
+                            >
+                            <input
+                                type="number"
+                                id="income"
+                                name="income"
+                                class="w-full p-2 border border-gray-300 rounded"
+                                placeholder="Masukkan pendapatan bulanan"
+                                required
+                            />
+                        </div>
+
+                        <div class="mb-4">
+                            <label
+                                for="familyMembers"
+                                class="block text-gray-700"
+                                >Jumlah Anggota Keluarga</label
+                            >
+                            <input
+                                type="number"
+                                id="familyMembers"
+                                name="familyMembers"
+                                class="w-full p-2 border border-gray-300 rounded"
+                                placeholder="Masukkan jumlah anggota keluarga"
+                                required
+                            />
+                        </div>
+
+                        <div
+                            id="result"
+                            class="p-4 mb-4 bg-gray-100 rounded hidden"
+                        >
+                            <p
+                                id="povertyResult"
+                                class="text-gray-800 font-semibold"
+                            ></p>
+                        </div>
+
+                        <button
+                            type="button"
+                            id="calculate"
+                            class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600"
+                        >
+                            Hitung
+                        </button>
+                    </form>
+                </div>
             </div>
         </section>
         <footer class="w-full bg-black text-white font-poppins py-10 mt-10">
@@ -213,12 +379,200 @@
                     </a>
                 </div>
 
-                <!-- Copyright -->
                 <p class="text-xs mt-6 text-center">
                     &copy; 2024 PovertyLens. All rights reserved.
                 </p>
             </div>
         </footer>
+
+        <div id="bubble-icon" class="bubble-icon">
+            <img src="/static/images/robot.png" alt="Chat" />
+        </div>
+
+        <!-- Chat Room -->
+        <div id="chat-room" class="chat-room hidden-chat">
+            <div
+                class="chat-header bg-orange-600 text-white p-3 rounded-t-lg flex justify-between items-center"
+            >
+                <h3>Chat dengan Kami</h3>
+            </div>
+            <div class="chat-body" id="chat-body">
+                <p
+                    class="chatbot-message bg-gradient-to-r from-orange-500 to-yellow-500 text-white p-2 mb-2 rounded-lg max-w-[80%]"
+                >
+                    Selamat datang di PovertyLens! Ada yang bisa kami bantu?
+                </p>
+            </div>
+            <div class="chat-footer">
+                <input
+                    type="text"
+                    id="chat-input"
+                    placeholder="Ketik pesan..."
+                />
+                <button onclick="sendMessage()">Kirim</button>
+            </div>
+        </div>
+
+        <script>
+            document
+                .getElementById("bubble-icon")
+                .addEventListener("click", function () {
+                    var chatRoom = document.getElementById("chat-room")
+                    chatRoom.classList.toggle("hidden-chat")
+                })
+            document
+                .getElementById("chat-input")
+                .addEventListener("keypress", function (e) {
+                    if (e.key === "Enter") {
+                        sendMessage()
+                    }
+                })
+
+            document
+                .getElementById("close-chat")
+                .addEventListener("click", function () {
+                    document.getElementById("chat-room").classList.add("hidden")
+                })
+
+            function sendMessage() {
+                const chatBody = document.getElementById("chat-body")
+                const userInput = document.getElementById("chat-input").value
+
+                if (userInput) {
+                    const userDiv = document.createElement("div")
+                    userDiv.className = "flex justify-end"
+                    userDiv.innerHTML = `
+                        <div class="bg-gradient-to-r from-neutral-400 to-stone-300 text-black p-3 rounded-lg max-w-[80%]">
+                            ${userInput}
+                        </div>
+                    `
+                    chatBody.appendChild(userDiv)
+
+                    fetch(
+                        `/send_message?msg=${encodeURIComponent(userInput)}`,
+                        {
+                            method: "GET",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                        },
+                    )
+                        .then((response) => response.text())
+                        .then((data) => {
+                            const botDiv = document.createElement("div")
+                            botDiv.className = "flex justify-start"
+                            botDiv.innerHTML = `
+                            <div class="bg-gradient-to-r from-orange-500 to-yellow-500 text-white p-3 rounded-lg max-w-[80%]">
+                                ${data}
+                            </div>
+                        `
+                            chatBody.appendChild(botDiv)
+                            chatBody.scrollTop = chatBody.scrollHeight
+                        })
+                        .catch((error) => {
+                            console.error("Error:", error)
+                            const errorDiv = document.createElement("div")
+                            errorDiv.className = "flex justify-start"
+                            errorDiv.innerHTML = `
+                            <div class="bg-red-100 text-red-600 p-3 rounded-lg max-w-[80%]">
+                                Maaf, terjadi kesalahan. Silakan coba lagi.
+                            </div>
+                        `
+                            chatBody.appendChild(errorDiv)
+                        })
+
+                    document.getElementById("chat-input").value = ""
+                }
+            }
+        </script>
+
+        <script>
+            const povertyData = {
+                2002: 115809.0,
+                2003: 137953.0,
+                2004: 167621.0,
+                2005: 171462.0,
+                2006: 184872.0,
+                2007: 197683.0,
+                2008: 244380.0,
+                2009: 248173.0,
+                2010: 270788.0,
+                2011: 280349.0,
+                2012: 305818.0,
+                2013: 333553.0,
+                2014: null,
+                2015: 371528.0,
+                2016: 295631.0,
+                2017: 418845.0,
+                2018: 455488.0,
+                2019: 465047.0,
+                2020: 502031.0,
+                2021: 523413.0,
+                2022: 565826.0,
+                2023: 623617.0,
+                2024: 664922.0,
+            }
+
+            document
+                .getElementById("year")
+                .addEventListener("change", function () {
+                    const selectedYear = this.value
+                    const povertyLine = povertyData[selectedYear]
+
+                    const displayElement =
+                        document.getElementById("povertyLineDisplay")
+                    if (povertyLine !== null && povertyLine !== undefined) {
+                        displayElement.innerHTML = `Garis Kemiskinan untuk tahun <b>${selectedYear}</b> : <b>Rp ${povertyLine.toLocaleString(
+                            "id-ID",
+                        )}</b>`
+                    } else {
+                        displayElement.textContent = `Garis Kemiskinan untuk tahun ${selectedYear} tidak tersedia.`
+                    }
+                })
+
+            document
+                .getElementById("calculate")
+                .addEventListener("click", function () {
+                    const year = document.getElementById("year").value
+                    const income = parseFloat(
+                        document.getElementById("income").value,
+                    )
+                    const familyMembers = parseInt(
+                        document.getElementById("familyMembers").value,
+                    )
+
+                    if (
+                        isNaN(income) ||
+                        isNaN(familyMembers) ||
+                        familyMembers <= 0
+                    ) {
+                        alert(
+                            "Harap masukkan pendapatan dan jumlah anggota keluarga dengan benar.",
+                        )
+                        return
+                    }
+
+                    const povertyLine = povertyData[year] || 0
+                    const totalPovertyLine = povertyLine * familyMembers
+
+                    let resultMessage
+                    if (income < totalPovertyLine) {
+                        resultMessage = `Pendapatan Anda berada di bawah garis kemiskinan untuk tahun ${year}. Total garis kemiskinan untuk keluarga Anda (dengan ${familyMembers} anggota) adalah Rp ${totalPovertyLine.toLocaleString(
+                            "id-ID",
+                        )}.`
+                    } else {
+                        resultMessage = `Pendapatan Anda berada di atas garis kemiskinan untuk tahun ${year}. Total garis kemiskinan untuk keluarga Anda (dengan ${familyMembers} anggota) adalah Rp ${totalPovertyLine.toLocaleString(
+                            "id-ID",
+                        )}.`
+                    }
+
+                    const resultDiv = document.getElementById("result")
+                    const resultText = document.getElementById("povertyResult")
+
+                    resultText.textContent = resultMessage
+                    resultDiv.classList.remove("hidden")
+                })
+        </script>
 
         <script>
             document
@@ -287,6 +641,25 @@
                 const url = `/download-csv?tahun=${selectedRange}`
                 window.location.href = url
             }
+        </script>
+        <script>
+            const toggles = document.querySelectorAll(".faq-toggle")
+
+            toggles.forEach((toggle) => {
+                toggle.addEventListener("click", function () {
+                    const targetId = toggle.getAttribute("data-target")
+                    const target = document.getElementById(targetId)
+
+                    target.classList.toggle("hidden")
+
+                    const icon = toggle.querySelector("svg")
+                    if (target.classList.contains("hidden")) {
+                        icon.classList.remove("rotate-180")
+                    } else {
+                        icon.classList.add("rotate-180")
+                    }
+                })
+            })
         </script>
     </body>
 </html>

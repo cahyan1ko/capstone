@@ -155,6 +155,107 @@
             </div>
         </footer>
 
+        <div id="bubble-icon" class="bubble-icon">
+            <img src="/static/images/robot.png" alt="Chat" />
+        </div>
+
+        <!-- Chat Room -->
+        <div id="chat-room" class="chat-room hidden-chat">
+            <div
+                class="chat-header bg-orange-600 text-white p-3 rounded-t-lg flex justify-between items-center"
+            >
+                <h3>Chat dengan Kami</h3>
+            </div>
+            <div class="chat-body" id="chat-body">
+                <p
+                    class="chatbot-message bg-gradient-to-r from-orange-500 to-yellow-500 text-white p-2 mb-2 rounded-lg max-w-[80%]"
+                >
+                    Selamat datang di PovertyLens! Ada yang bisa kami bantu?
+                </p>
+            </div>
+            <div class="chat-footer">
+                <input
+                    type="text"
+                    id="chat-input"
+                    placeholder="Ketik pesan..."
+                />
+                <button onclick="sendMessage()">Kirim</button>
+            </div>
+        </div>
+
+        <script>
+            document
+                .getElementById("bubble-icon")
+                .addEventListener("click", function () {
+                    var chatRoom = document.getElementById("chat-room")
+                    chatRoom.classList.toggle("hidden-chat")
+                })
+            document
+                .getElementById("chat-input")
+                .addEventListener("keypress", function (e) {
+                    if (e.key === "Enter") {
+                        sendMessage()
+                    }
+                })
+
+            document
+                .getElementById("close-chat")
+                .addEventListener("click", function () {
+                    document.getElementById("chat-room").classList.add("hidden")
+                })
+
+            function sendMessage() {
+                const chatBody = document.getElementById("chat-body")
+                const userInput = document.getElementById("chat-input").value
+
+                if (userInput) {
+                    const userDiv = document.createElement("div")
+                    userDiv.className = "flex justify-end"
+                    userDiv.innerHTML = `
+                        <div class="bg-gradient-to-r from-neutral-400 to-stone-300 text-black p-3 rounded-lg max-w-[80%]">
+                            ${userInput}
+                        </div>
+                    `
+                    chatBody.appendChild(userDiv)
+
+                    fetch(
+                        `/send_message?msg=${encodeURIComponent(userInput)}`,
+                        {
+                            method: "GET",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                        },
+                    )
+                        .then((response) => response.text())
+                        .then((data) => {
+                            const botDiv = document.createElement("div")
+                            botDiv.className = "flex justify-start"
+                            botDiv.innerHTML = `
+                            <div class="bg-gradient-to-r from-orange-500 to-yellow-500 text-white p-3 rounded-lg max-w-[80%]">
+                                ${data}
+                            </div>
+                        `
+                            chatBody.appendChild(botDiv)
+                            chatBody.scrollTop = chatBody.scrollHeight
+                        })
+                        .catch((error) => {
+                            console.error("Error:", error)
+                            const errorDiv = document.createElement("div")
+                            errorDiv.className = "flex justify-start"
+                            errorDiv.innerHTML = `
+                            <div class="bg-red-100 text-red-600 p-3 rounded-lg max-w-[80%]">
+                                Maaf, terjadi kesalahan. Silakan coba lagi.
+                            </div>
+                        `
+                            chatBody.appendChild(errorDiv)
+                        })
+
+                    document.getElementById("chat-input").value = ""
+                }
+            }
+        </script>
+
         <script>
             function filterLembaga() {
                 const searchInput = document

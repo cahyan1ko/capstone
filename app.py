@@ -7,6 +7,13 @@ import cv2
 import datetime
 import pytz
 
+
+# ppp
+from models.model import initialize_llm, initialize_embeddings, initialize_vectorstore, create_rag_chain
+from langchain_community.document_loaders import PyPDFLoader
+# ppp
+
+
 from sklearn.feature_extraction.text import CountVectorizer
 from datetime import datetime, timezone
 from sqlalchemy import func
@@ -22,6 +29,12 @@ import os
 from flask_migrate import Migrate
 
 app = Flask(__name__)
+
+# ppp
+GROQ_API_KEY = "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"
+PDF_FILE_PATH = os.path.join(os.path.dirname(__file__), "data/dataset_poverty2.pdf")
+# ppp
+
 
 CORS(app)
 WIB = pytz.timezone('Asia/Jakarta')
@@ -121,56 +134,98 @@ def handle_none(value):
 ### CHATBOT
 ### CHATBOT
 
-model_name = "models/save_model_chatbot"
-tokenizer = AutoTokenizer.from_pretrained(model_name, local_files_only=True)
-model = AutoModelForCausalLM.from_pretrained(model_name, local_files_only=True)
+def initialize_rag_model():
+    """Initialize the RAG model and vector store retriever."""
+    try:
+        # Initialize LLM and embeddings
+        llm = initialize_llm(GROQ_API_KEY)
+        embeddings = initialize_embeddings()
 
-def generate_response(input_text, max_new_tokens=100):
-    prompt = (
-        # "Anda adalah asisten cerdas PovertyLens, aplikasi pemetaan kemiskinan. "
-        # "Jawaban Anda harus singkat, jelas, dan hanya fokus pada informasi yang relevan dengan kemiskinan, pemetaan sosial, atau bantuan sosial. "
-        # "Jangan berikan informasi umum atau yang tidak terkait.\n\n"
-        
-        # "Contoh Pertanyaan dan Jawaban:\n"
-        # "Pertanyaan: Apa itu aplikasi pemetaan kemiskinan?\n"
-        # "Jawab: Aplikasi pemetaan kemiskinan adalah platform yang digunakan untuk menganalisis data kemiskinan di wilayah tertentu.\n\n"
-        
-        # "Pertanyaan: Bagaimana saya bisa menganalisis area dengan lahan terbangun tinggi?\n"
-        # "Jawab: Dengan Pindai Wilayah, pengguna dapat mengidentifikasi area dengan lahan terbangun tinggi.\n\n"
-        
-        "Pertanyaan: {input_text}\nJawab:"
-    )
-    inputs = tokenizer(prompt.format(input_text=input_text), return_tensors="pt", padding=True, truncation=True, max_length=350)   
-    outputs = model.generate(
-        inputs["input_ids"],
-        attention_mask=inputs["attention_mask"],
-        max_new_tokens=max_new_tokens,
-        do_sample=False,
-        temperature=0.0,
-        top_k=10,
-        top_p=0.5,
-        pad_token_id=tokenizer.eos_token_id
-    )  
-    response = tokenizer.decode(outputs[0], skip_special_tokens=True).strip() 
-    if not response or len(response.split()) < 3:
-        response = "Maaf, saya tidak dapat memahami pertanyaan Anda. Bisa dijelaskan lebih lanjut?"
-    keywords = ["kemiskinan", "bantuan", "pemetaan", "sosial", "ekonomi"]
-    if not any(keyword in response.lower() for keyword in keywords):
-        response = "Informasi yang relevan tidak ditemukan. Silakan ajukan pertanyaan yang lebih spesifik."
-    response_lines = response.split('.')
-    response = '. '.join([line for line in response_lines if any(keyword in line.lower() for keyword in keywords)])
-    if not response:
-        response = "Jawaban tidak tersedia. Pastikan pertanyaan Anda terkait dengan kemiskinan atau bantuan sosial."
-    return response
+        # Load and process PDF documents
+        pdf_loader = PyPDFLoader(PDF_FILE_PATH)
+        documents = pdf_loader.load()
 
-@app.route('/send_message', methods=['POST'])
-def send_message():
-    user_message = request.json.get('message')
-    if not user_message:
-        return jsonify({'error': 'No message provided'}), 400
-    bot_response = generate_response(user_message)
-    return jsonify(response=bot_response)
+        # Initialize vector store retriever
+        retriever = initialize_vectorstore(documents, embeddings)
+        app.config['llm'] = llm
+        app.config['retriever'] = retriever
+        print("Model and retriever initialized successfully.")
+    except Exception as e:
+        print(f"Error initializing model: {e}")
+        raise e
 
+@app.before_request
+def setup_model():
+    """Ensure model is initialized before the first request."""
+    if 'llm' not in app.config or 'retriever' not in app.config:
+        initialize_rag_model()
+
+@app.route('/send_message', methods=['GET'])
+def get_response():
+    message = request.args.get('msg')
+
+    # Check if message is present
+    if not message:
+        return "No input received."
+
+    # Ensure model and retriever are initialized
+    llm = app.config.get('llm')
+    retriever = app.config.get('retriever')
+    
+    if not llm or not retriever:
+        return "Model or retriever is not initialized."
+
+    try:
+        # Create the RAG chain with the retriever and llm
+        rag_chain = create_rag_chain(retriever, llm)
+        response = rag_chain.invoke({"input": message})
+        return response['answer']
+    except Exception as e:
+        return f"Error: {e}"
+
+
+# model_name = "models/save_model_chatbot"
+# tokenizer = AutoTokenizer.from_pretrained(model_name, local_files_only=True)
+# model = AutoModelForCausalLM.from_pretrained(model_name, local_files_only=True)
+
+# def generate_response(input_text, max_new_tokens=100):
+#     prompt = (  
+#         "Pertanyaan: {input_text}\nJawab:"
+#     )
+#     inputs = tokenizer(prompt.format(input_text=input_text), return_tensors="pt", padding=True, truncation=True, max_length=350)   
+#     outputs = model.generate(
+#         inputs["input_ids"],
+#         attention_mask=inputs["attention_mask"],
+#         max_new_tokens=max_new_tokens,
+#         do_sample=False,
+#         temperature=0.0,
+#         top_k=10,
+#         top_p=0.5,
+#         pad_token_id=tokenizer.eos_token_id
+#     )  
+#     response = tokenizer.decode(outputs[0], skip_special_tokens=True).strip() 
+#     if not response or len(response.split()) < 3:
+#         response = "Maaf, saya tidak dapat memahami pertanyaan Anda. Bisa dijelaskan lebih lanjut?"
+#     keywords = ["kemiskinan", "bantuan", "pemetaan", "sosial", "ekonomi"]
+#     if not any(keyword in response.lower() for keyword in keywords):
+#         response = "Informasi yang relevan tidak ditemukan. Silakan ajukan pertanyaan yang lebih spesifik."
+#     response_lines = response.split('.')
+#     response = '. '.join([line for line in response_lines if any(keyword in line.lower() for keyword in keywords)])
+#     if not response:
+#         response = "Jawaban tidak tersedia. Pastikan pertanyaan Anda terkait dengan kemiskinan atau bantuan sosial."
+#     return response
+
+# @app.route('/send_message', methods=['POST'])
+# def send_message():
+#     user_message = request.json.get('message')
+#     if not user_message:
+#         return jsonify({'error': 'No message provided'}), 400
+#     bot_response = generate_response(user_message)
+#     return jsonify(response=bot_response)
+
+
+
+### BATAS
 ### IMAGE PROCESSING
 ### IMAGE PROCESSING
 ### IMAGE PROCESSING

@@ -21,7 +21,7 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
 }
 
 .bubble-icon img {
@@ -81,7 +81,7 @@ section {
 .chat-footer button {
     margin-left: 5px;
     padding: 6px 10px;
-    background-color: #007bff;
+    background-color: #f97316;
     color: white;
     border: none;
     border-radius: 4px;
@@ -94,7 +94,7 @@ section {
 
 .user-message {
     align-self: flex-end;
-    background-color: #007bff;
+    background-color: #f97316;
     color: #ffffff;
     padding: 8px 12px;
     border-radius: 15px 15px 0 15px;
@@ -104,11 +104,14 @@ section {
 .chatbot-message {
     align-self: flex-start;
     background-color: #f1f1f1;
-    color: #333333;
+    color: white;
     padding: 8px 12px;
     border-radius: 15px 15px 15px 0;
     max-width: 70%;
 }
+
+
+
 
 /* .kemiskinan-section {
     display: flex;
